@@ -23,9 +23,7 @@
 */
 package com.googlecode.gwtquake.shared.sys;
 
-
 public interface QuakeSocketFactory {
 
-	QuakeSocket bind(String ip, int port);
-
+	QuakeSocket bind(boolean server);
 }

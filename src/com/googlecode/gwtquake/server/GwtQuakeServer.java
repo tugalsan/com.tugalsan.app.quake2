@@ -18,7 +18,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 package com.googlecode.gwtquake.server;
 
-
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.servlet.ServletContextHandler;
@@ -31,15 +30,11 @@ import com.googlecode.gwtquake.shared.sys.NET;
 
 /**
  * This entry point runs a multiplayer-capable GwtQuake server.
- * 
- * It runs an embedded Jetty instance, and depends upon Jetty 7's experimental
- * WebSocket support for c/s communication.
  */
 public class GwtQuakeServer {
 
   private static void printUsageAndDie() {
     System.err.println("usage: GwtQuakeServer [port] [quake args]");
-    System.err.println("Note that this will use both [port] and [port+1]");
     System.exit(-1);
   }
 
@@ -61,21 +56,22 @@ public class GwtQuakeServer {
 
     Compatibility.impl = new CompatibilityImpl();
     ResourceLoader.impl = new ResourceLoaderImpl();
-    NET.socketFactory = new ServerWebSocketFactoryImpl();
 
-    createServer(port);
+    ServletContextHandler context = createServer(port);
+    NET.socketFactory = new ServerWebSocketFactoryImpl(context);
     QuakeServer.run(qargs);
   }
 
-  private static void createServer(int port) throws Exception {
+  private static ServletContextHandler createServer(int port) throws Exception {
     Server server = new Server(port);
 
-    ServletContextHandler handler = new ServletContextHandler();
-    handler.setResourceBase("war");
-    handler.addServlet(new ServletHolder(new GwtQuakeServlet()), "/GwtQuake.html");
-    handler.addServlet(new ServletHolder(new DefaultServlet()), "/*");
-    server.setHandler(handler);
+    ServletContextHandler context = new ServletContextHandler();
+    context.setResourceBase("war");
+    context.addServlet(new ServletHolder(new GwtQuakeServlet()), "/GwtQuake.html");
+    context.addServlet(new ServletHolder(new DefaultServlet()), "/*");
+    server.setHandler(context);
 
     server.start();
+    return context;
   }
 }

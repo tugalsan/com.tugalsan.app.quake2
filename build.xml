@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <project name="GwtQuake" default="build" basedir=".">
-  <property name="gwt.args" value="" />
-  <property name="gwt.sdk" location="lib/gwt-2.4.0" />
+  <property name="gwt.args" value="-style pretty -draftCompile" />
+  <property name="gwt.sdk" location="lib/gwt-2.7.0" />
   <property name="gwtgl" location="lib/gwtgl-0.3" />
 
   <path id="project.class.path">
+    <pathelement location="war/WEB-INF/classes"/>
+    <fileset dir="lib/jetty" includes="**/*.jar"/>
+    <fileset dir="${gwtgl}" includes="*.jar"/>
+    <fileset dir="war/WEB-INF/lib" includes="**/*.jar"/>
+  </path>
+
+  <path id="gwtc.class.path">
     <pathelement location="war/WEB-INF/classes"/>
     <pathelement location="${gwt.sdk}/gwt-user.jar"/>
     <fileset dir="${gwt.sdk}" includes="gwt-dev*.jar"/>
     <fileset dir="${gwt.sdk}" includes="validation*.jar"/>
     <fileset dir="${gwtgl}" includes="*.jar"/>
-    <fileset dir="lib/jetty" includes="**/*.jar"/>
     <fileset dir="war/WEB-INF/lib" includes="**/*.jar"/>
   </path>
 
@@ -33,11 +39,10 @@
           failonerror="true">
         <classpath>
           <pathelement location="src"/>
-          <path refid="project.class.path"/>
+          <path refid="gwtc.class.path"/>
         </classpath>
         <jvmarg value="-Xmx512M"/>
-        <!-- Have to turn off aggressive opts for now because of a weird dataflow bug -->
-        <arg line="-XdisableAggressiveOptimization" />
+        <jvmarg value="-Xss8M"/>
         <arg line="${gwt.args}" />
         <arg value="-war" />
         <arg file="@{destdir}" />
@@ -48,7 +53,6 @@
 
   <target name="libs" description="Copy libs to WEB-INF/lib">
     <mkdir dir="war/WEB-INF/lib" />
-    <copy todir="war/WEB-INF/lib" file="${gwt.sdk}/gwt-servlet.jar" />
   </target>
 
   <target name="server" depends="libs" description="Compile java source to bytecode">
@@ -70,23 +74,8 @@
         <pathelement location="src"/>
         <path refid="project.class.path"/>
       </classpath>
+      <jvmarg value="-Xmx1g"/>
       <arg value="hires"/>
-    </java>
-  </target>
-
-  <target name="devmode" depends="server" description="Run development mode">
-    <java failonerror="true" fork="true" classname="com.google.gwt.dev.DevMode">
-      <classpath>
-        <pathelement location="src"/>
-        <path refid="project.class.path"/>
-      </classpath>
-      <jvmarg value="-Xmx256M"/>
-      <arg value="-startupUrl"/>
-      <arg value="GwtQuake.html"/>
-      <arg line="-war"/>
-      <arg value="war"/>
-      <arg line="${gwt.args}"/>
-      <arg value="com.googlecode.gwtquake.GwtQuake"/>
     </java>
   </target>
 
@@ -105,13 +94,16 @@
 
   <target name="build" depends="server,install-resources,client.build" description="Build this project" />
 
-  <target name="run" depends="build" description="Run the server">
+  <target name="serve" depends="server" description="Run the server">
     <java failonerror="true" fork="true" classname="com.googlecode.gwtquake.server.GwtQuakeServer">
       <classpath>
         <pathelement location="src"/>
         <path refid="project.class.path"/>
       </classpath>
     </java>
+  </target>
+
+  <target name="run" depends="build, serve" description="Build everything and run the server">
   </target>
 
   <target name="war" depends="build" description="Create a war file">
@@ -128,4 +120,3 @@
     <delete dir="war/baseq2" failonerror="false" />
   </target>
 </project>
-

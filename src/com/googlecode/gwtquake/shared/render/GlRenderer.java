@@ -41,7 +41,7 @@ import com.googlecode.gwtquake.shared.util.Vargs;
 
 /**
  * LWJGLRenderer
- * 
+ *
  * @author dsanders/cwei
  */
 public abstract class GlRenderer implements Renderer {
@@ -74,15 +74,15 @@ public abstract class GlRenderer implements Renderer {
     assert (GlConstants.SIN.length == 256) : "warpsin table bug";
 
     Window.Printf(Constants.PRINT_ALL, "ref_gl version: " + GlConstants.REF_VERSION + '\n');
-    Images.Draw_GetPalette();  
+    Images.Draw_GetPalette();
     GlConfig.init();
-    
+
     Commands.addCommand("imagelist", new ExecutableCommand() {
     	public void execute() {
     		Images.GL_ImageList_f();
     	}
     });
-    
+
     Commands.addCommand("screenshot", new ExecutableCommand() {
     	public void execute() {
     		Misc.GL_ScreenShot_f();
@@ -111,14 +111,14 @@ public abstract class GlRenderer implements Renderer {
 
     // post init
     GlState.qglPointParameterfEXT = true;
-    
+
     Misc.GL_SetDefaultState();
-    
+
     Images.GL_InitImages();
     Models.Mod_Init();
     Particles.R_InitParticleTexture();
     Drawing.Draw_InitLocal();
-    
+
     int err = GlState.gl.glGetError();
     if (err != Gl1Context.GL_NO_ERROR) {
     	Window.Printf(
@@ -145,11 +145,11 @@ public abstract class GlRenderer implements Renderer {
     Commands.RemoveCommand("screenshot");
     Commands.RemoveCommand("imagelist");
     Commands.RemoveCommand("gl_strings");
-    
+
     Models.Mod_FreeAll();
-    
+
     Images.GL_ShutdownImages();
-    
+
     /*
      * shut down OS specific OpenGL stuff like contexts, etc.
      */
@@ -253,7 +253,7 @@ public abstract class GlRenderer implements Renderer {
     // or null
     int i;
     int color = 0;
-    
+
     if (palette != null) {
     	int j =0;
     	for (i = 0; i < 256; i++) {
@@ -270,7 +270,7 @@ public abstract class GlRenderer implements Renderer {
     	}
     }
     Images.GL_SetTexturePalette(GlState.r_rawpalette);
-    
+
     GlState.gl.glClearColor(0, 0, 0, 0);
     GlState.gl.glClear(Gl1Context.GL_COLOR_BUFFER_BIT);
     GlState.gl.glClearColor(1f, 0f, 0.5f, 0.5f);
@@ -367,7 +367,7 @@ public abstract class GlRenderer implements Renderer {
 
   /*
    * ============= Draw_TileClear
-   * 
+   *
    * This repeats a 64*64 tile graphic to fill the screen around a sized down
    * refresh window. =============
    */
@@ -403,7 +403,7 @@ public abstract class GlRenderer implements Renderer {
 
   /*
    * ============= Draw_Fill
-   * 
+   *
    * Fills a box of pixels with a single color =============
    */
   /**
@@ -685,14 +685,14 @@ public abstract class GlRenderer implements Renderer {
 
  /**
    * this is a hack for jogl renderers.
-   * 
+   *
    * @param callback
    */
     public final void updateScreen(ExecutableCommand callback) {
         callback.execute();
-    }   
-  
-  
+    }
+
+
   /**
    * R_BeginFrame
    */
@@ -786,5 +786,4 @@ public abstract class GlRenderer implements Renderer {
     //
     Entities.R_Clear();
   }
-
 }

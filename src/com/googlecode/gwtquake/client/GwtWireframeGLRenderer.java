@@ -18,7 +18,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 package com.googlecode.gwtquake.client;
 
-
 import com.google.gwt.core.client.JsArrayInteger;
 import com.google.gwt.html5.client.CanvasElement;
 import com.google.gwt.html5.client.CanvasRenderingContext2D;
@@ -47,7 +46,7 @@ public class GwtWireframeGLRenderer extends GlRenderer implements Renderer {
 	public void DrawChar_(int x, int y, int num) {
 		ctx.setGlobalAlpha(1);
 		num &= 255;
-		
+
 		if ( (num&127) == 32 ) return; // space
 
 		if (y <= -8) return; // totally off screen
@@ -60,9 +59,9 @@ public class GwtWireframeGLRenderer extends GlRenderer implements Renderer {
 				num = '+';
 			}
 		}
-		ctx.fillText("" + (char) num, x, y + 10); 
+		ctx.fillText("" + (char) num, x, y + 10);
 	}
-	
+
 	public void DrawStretchPic (int x, int y, int w, int h, String pic) {
 		super.DrawStretchPic(x, y, w, h, pic);
 		ctx.setGlobalAlpha(1);
@@ -75,18 +74,17 @@ public class GwtWireframeGLRenderer extends GlRenderer implements Renderer {
 		ctx.fillText(pic.substring(pic.lastIndexOf('_') + 1), x, y + 10);
 	}
 
-	
 	@Override
 	public void GL_ResampleTexture(int[] in, int inwidth, int inheight,
 			int[] out, int outwidth, int outheight) {
 		// TODO(haustein) Auto-generated method stub
 		// Should be simple with canvas and is not needed for wireframe
 	}
-  
+
   static native JsArrayInteger getImageSize(String name) /*-{
     return $wnd.__imageSizes[name];
   }-*/;
-  
+
   public Image GL_LoadNewImage(final String name, int type) {
 		final Image image = Images.GL_Find_free_image_t(name, type);
 
@@ -99,11 +97,7 @@ public class GwtWireframeGLRenderer extends GlRenderer implements Renderer {
 			image.width = d.get(0);
 			image.height = d.get(1);
 		}
-		
+
 		return image;
 	}
-  
-
-
-
 }

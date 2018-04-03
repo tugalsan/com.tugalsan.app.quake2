@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -45,7 +45,7 @@ public class Constants {
   public final static int PM_SPECTATOR = 1;
   // no acceleration or turning
   public final static int PM_DEAD = 2;
-  public final static int PM_GIB = 3; // different bounding box 
+  public final static int PM_GIB = 3; // different bounding box
   public final static int PM_FREEZE = 4;
 
   public final static int EV_NONE = 0;
@@ -58,39 +58,39 @@ public class Constants {
   public final static int EV_OTHER_TELEPORT = 7;
 
   //	angle indexes
-  public final static int PITCH = 0; // up / down 
-  public final static int YAW = 1; // left / right 
-  public final static int ROLL = 2; // fall over 
+  public final static int PITCH = 0; // up / down
+  public final static int YAW = 1; // left / right
+  public final static int ROLL = 2; // fall over
 
-  public final static int MAX_STRING_CHARS = 1024; // max length of a string passed to Cmd_TokenizeString 
-  public final static int MAX_STRING_TOKENS = 80; // max tokens resulting from Cmd_TokenizeString 
-  public final static int MAX_TOKEN_CHARS = 1024; // max length of an individual token 
+  public final static int MAX_STRING_CHARS = 1024; // max length of a string passed to Cmd_TokenizeString
+  public final static int MAX_STRING_TOKENS = 80; // max tokens resulting from Cmd_TokenizeString
+  public final static int MAX_TOKEN_CHARS = 1024; // max length of an individual token
 
-  public final static int MAX_QPATH = 64; // max length of a quake game pathname 
-  public final static int MAX_OSPATH = 128; // max length of a filesystem pathname 
+  public final static int MAX_QPATH = 64; // max length of a quake game pathname
+  public final static int MAX_OSPATH = 128; // max length of a filesystem pathname
 
   //	per-level limits
-  public final static int MAX_CLIENTS = 256; // absolute limit 
-  public final static int MAX_EDICTS = 1024; // must change protocol to increase more 
+  public final static int MAX_CLIENTS = 256; // absolute limit
+  public final static int MAX_EDICTS = 1024; // must change protocol to increase more
   public final static int MAX_LIGHTSTYLES = 256;
-  public final static int MAX_MODELS = 256; // these are sent over the net as bytes 
-  public final static int MAX_SOUNDS = 256; // so they cannot be blindly increased 
+  public final static int MAX_MODELS = 256; // these are sent over the net as bytes
+  public final static int MAX_SOUNDS = 256; // so they cannot be blindly increased
   public final static int MAX_IMAGES = 256;
   public final static int MAX_ITEMS = 256;
-  public final static int MAX_GENERAL = (MAX_CLIENTS * 2); // general config strings 
+  public final static int MAX_GENERAL = (MAX_CLIENTS * 2); // general config strings
 
   //	game print flags
-  public final static int PRINT_LOW = 0; // pickup messages 
-  public final static int PRINT_MEDIUM = 1; // death messages 
-  public final static int PRINT_HIGH = 2; // critical messages 
-  public final static int PRINT_CHAT = 3; // chat messages 
+  public final static int PRINT_LOW = 0; // pickup messages
+  public final static int PRINT_MEDIUM = 1; // death messages
+  public final static int PRINT_HIGH = 2; // critical messages
+  public final static int PRINT_CHAT = 3; // chat messages
 
-  public final static int ERR_FATAL = 0; // exit the entire game with a popup window 
-  public final static int ERR_DROP = 1; // print to console and disconnect from game 
-  public final static int ERR_DISCONNECT = 2; // don't kill server 
+  public final static int ERR_FATAL = 0; // exit the entire game with a popup window
+  public final static int ERR_DROP = 1; // print to console and disconnect from game
+  public final static int ERR_DISCONNECT = 2; // don't kill server
 
   public final static int PRINT_ALL = 0;
-  public final static int PRINT_DEVELOPER = 1; // only print when "developer 1" 
+  public final static int PRINT_DEVELOPER = 1; // only print when "developer 1"
   public final static int PRINT_ALERT = 2;
 
   //	key / value info strings
@@ -105,16 +105,16 @@ public class Constants {
   public final static int SFF_SUBDIR = 0x08;
   public final static int SFF_SYSTEM = 0x10;
 
-  public final static int CVAR_ARCHIVE = 1; // set to cause it to be saved to vars.rc 
-  public final static int CVAR_USERINFO = 2; // added to userinfo when changed 
-  public final static int CVAR_SERVERINFO = 4; // added to serverinfo when changed 
-  public final static int CVAR_NOSET = 8; // don't allow change from console at all, 
+  public final static int CVAR_ARCHIVE = 1; // set to cause it to be saved to vars.rc
+  public final static int CVAR_USERINFO = 2; // added to userinfo when changed
+  public final static int CVAR_SERVERINFO = 4; // added to serverinfo when changed
+  public final static int CVAR_NOSET = 8; // don't allow change from console at all,
   // but can be set from the command line
-  public final static int CVAR_LATCH = 16; // save changes until server restart 
+  public final static int CVAR_LATCH = 16; // save changes until server restart
 
   // lower bits are stronger, and will eat weaker brushes completely
-  public final static int CONTENTS_SOLID = 1; // an eye is never valid in a solid 
-  public final static int CONTENTS_WINDOW = 2; // translucent, but not watery 
+  public final static int CONTENTS_SOLID = 1; // an eye is never valid in a solid
+  public final static int CONTENTS_WINDOW = 2; // translucent, but not watery
   public final static int CONTENTS_AUX = 4;
   public final static int CONTENTS_LAVA = 8;
   public final static int CONTENTS_SLIME = 16;
@@ -136,30 +136,30 @@ public class Constants {
   public final static int CONTENTS_CURRENT_UP = 0x400000;
   public final static int CONTENTS_CURRENT_DOWN = 0x800000;
 
-  public final static int CONTENTS_ORIGIN = 0x1000000; // removed before bsping an entity 
+  public final static int CONTENTS_ORIGIN = 0x1000000; // removed before bsping an entity
 
-  public final static int CONTENTS_MONSTER = 0x2000000; // should never be on a brush, only in game 
+  public final static int CONTENTS_MONSTER = 0x2000000; // should never be on a brush, only in game
   public final static int CONTENTS_DEADMONSTER = 0x4000000;
-  public final static int CONTENTS_DETAIL = 0x8000000; // brushes to be added after vis leafs 
-  public final static int CONTENTS_TRANSLUCENT = 0x10000000; // auto set if any surface has trans 
+  public final static int CONTENTS_DETAIL = 0x8000000; // brushes to be added after vis leafs
+  public final static int CONTENTS_TRANSLUCENT = 0x10000000; // auto set if any surface has trans
   public final static int CONTENTS_LADDER = 0x20000000;
 
-  public final static int SURF_LIGHT = 0x1; // value will hold the light strength 
-  public final static int SURF_SLICK = 0x2; // effects game physics 
+  public final static int SURF_LIGHT = 0x1; // value will hold the light strength
+  public final static int SURF_SLICK = 0x2; // effects game physics
 
-  public final static int SURF_SKY = 0x4; // don't draw, but add to skybox 
-  public final static int SURF_WARP = 0x8; // turbulent water warp 
+  public final static int SURF_SKY = 0x4; // don't draw, but add to skybox
+  public final static int SURF_WARP = 0x8; // turbulent water warp
   public final static int SURF_TRANS33 = 0x10;
   public final static int SURF_TRANS66 = 0x20;
-  public final static int SURF_FLOWING = 0x40; // scroll towards angle 
-  public final static int SURF_NODRAW = 0x80; // don't bother referencing the texture 
+  public final static int SURF_FLOWING = 0x40; // scroll towards angle
+  public final static int SURF_NODRAW = 0x80; // don't bother referencing the texture
 
   //
   // button bits
   //
   public final static int BUTTON_ATTACK = 1;
   public final static int BUTTON_USE = 2;
-  public final static int BUTTON_ANY = 128; // any key whatsoever 
+  public final static int BUTTON_ANY = 128; // any key whatsoever
 
   public final static int MAXTOUCH = 32;
 
@@ -168,23 +168,23 @@ public class Constants {
   // that happen constantly on the given entity.
   // An entity that has effects will be sent to the client
   // even if it has a zero index model.
-  public final static int EF_ROTATE = 0x00000001; // rotate (bonus items) 
-  public final static int EF_GIB = 0x00000002; // leave a trail 
-  public final static int EF_BLASTER = 0x00000008; // redlight + trail 
-  public final static int EF_ROCKET = 0x00000010; // redlight + trail 
+  public final static int EF_ROTATE = 0x00000001; // rotate (bonus items)
+  public final static int EF_GIB = 0x00000002; // leave a trail
+  public final static int EF_BLASTER = 0x00000008; // redlight + trail
+  public final static int EF_ROCKET = 0x00000010; // redlight + trail
   public final static int EF_GRENADE = 0x00000020;
   public final static int EF_HYPERBLASTER = 0x00000040;
   public final static int EF_BFG = 0x00000080;
   public final static int EF_COLOR_SHELL = 0x00000100;
   public final static int EF_POWERSCREEN = 0x00000200;
-  public final static int EF_ANIM01 = 0x00000400; // automatically cycle between frames 0 and 1 at 2 hz 
-  public final static int EF_ANIM23 = 0x00000800; // automatically cycle between frames 2 and 3 at 2 hz 
-  public final static int EF_ANIM_ALL = 0x00001000; // automatically cycle through all frames at 2hz 
-  public final static int EF_ANIM_ALLFAST = 0x00002000; // automatically cycle through all frames at 10hz 
+  public final static int EF_ANIM01 = 0x00000400; // automatically cycle between frames 0 and 1 at 2 hz
+  public final static int EF_ANIM23 = 0x00000800; // automatically cycle between frames 2 and 3 at 2 hz
+  public final static int EF_ANIM_ALL = 0x00001000; // automatically cycle through all frames at 2hz
+  public final static int EF_ANIM_ALLFAST = 0x00002000; // automatically cycle through all frames at 10hz
   public final static int EF_FLIES = 0x00004000;
   public final static int EF_QUAD = 0x00008000;
   public final static int EF_PENT = 0x00010000;
-  public final static int EF_TELEPORTER = 0x00020000; // particle fountain 
+  public final static int EF_TELEPORTER = 0x00020000; // particle fountain
   public final static int EF_FLAG1 = 0x00040000;
   public final static int EF_FLAG2 = 0x00080000;
   // RAFAEL
@@ -205,30 +205,30 @@ public class Constants {
   //ROGUE
 
   // entity_state_t->renderfx flags
-  public final static int RF_MINLIGHT = 1; // allways have some light (viewmodel) 
-  public final static int RF_VIEWERMODEL = 2; // don't draw through eyes, only mirrors 
-  public final static int RF_WEAPONMODEL = 4; // only draw through eyes 
-  public final static int RF_FULLBRIGHT = 8; // allways draw full intensity 
-  public final static int RF_DEPTHHACK = 16; // for view weapon Z crunching 
+  public final static int RF_MINLIGHT = 1; // allways have some light (viewmodel)
+  public final static int RF_VIEWERMODEL = 2; // don't draw through eyes, only mirrors
+  public final static int RF_WEAPONMODEL = 4; // only draw through eyes
+  public final static int RF_FULLBRIGHT = 8; // allways draw full intensity
+  public final static int RF_DEPTHHACK = 16; // for view weapon Z crunching
   public final static int RF_TRANSLUCENT = 32;
   public final static int RF_FRAMELERP = 64;
   public final static int RF_BEAM = 128;
-  public final static int RF_CUSTOMSKIN = 256; // skin is an index in image_precache 
-  public final static int RF_GLOW = 512; // pulse lighting for bonus items 
+  public final static int RF_CUSTOMSKIN = 256; // skin is an index in image_precache
+  public final static int RF_GLOW = 512; // pulse lighting for bonus items
   public final static int RF_SHELL_RED = 1024;
   public final static int RF_SHELL_GREEN = 2048;
   public final static int RF_SHELL_BLUE = 4096;
 
   //ROGUE
-  public final static int RF_IR_VISIBLE = 0x00008000; // 32768 
-  public final static int RF_SHELL_DOUBLE = 0x00010000; // 65536 
+  public final static int RF_IR_VISIBLE = 0x00008000; // 32768
+  public final static int RF_SHELL_DOUBLE = 0x00010000; // 65536
   public final static int RF_SHELL_HALF_DAM = 0x00020000;
   public final static int RF_USE_DISGUISE = 0x00040000;
   //ROGUE
 
   // player_state_t->refdef flags
-  public final static int RDF_UNDERWATER = 1; // warp the screen as apropriate 
-  public final static int RDF_NOWORLDMODEL = 2; // used for player configuration screen 
+  public final static int RDF_UNDERWATER = 1; // warp the screen as apropriate
+  public final static int RDF_NOWORLDMODEL = 2; // used for player configuration screen
 
   //ROGUE
   public final static int RDF_IRGOGGLES = 4;
@@ -256,7 +256,7 @@ public class Constants {
   public final static int MZ_IONRIPPER = 16;
   public final static int MZ_BLUEHYPERBLASTER = 17;
   public final static int MZ_PHALANX = 18;
-  public final static int MZ_SILENCED = 128; // bit flag ORed with one of the above numbers 
+  public final static int MZ_SILENCED = 128; // bit flag ORed with one of the above numbers
 
   //ROGUE
   public final static int MZ_ETF_RIFLE = 30;
@@ -441,7 +441,7 @@ public class Constants {
   public final static int MZ2_WIDOW_DISRUPTOR = 148;
   public final static int MZ2_WIDOW_BLASTER = 149;
   public final static int MZ2_WIDOW_RAIL = 150;
-  public final static int MZ2_WIDOW_PLASMABEAM = 151; // PMM - not used 
+  public final static int MZ2_WIDOW_PLASMABEAM = 151; // PMM - not used
   public final static int MZ2_CARRIER_MACHINEGUN_L2 = 152;
   public final static int MZ2_CARRIER_MACHINEGUN_R2 = 153;
   public final static int MZ2_WIDOW_RAIL_LEFT = 154;
@@ -521,13 +521,13 @@ public class Constants {
   //	   modifier flags
   public final static int CHAN_NO_PHS_ADD = 8;
   // send to all clients, not just ones in PHS (ATTN 0 will also do this)
-  public final static int CHAN_RELIABLE = 16; // send by reliable message, not datagram 
+  public final static int CHAN_RELIABLE = 16; // send by reliable message, not datagram
 
   //	   sound attenuation values
-  public final static int ATTN_NONE = 0; // full volume the entire level 
+  public final static int ATTN_NONE = 0; // full volume the entire level
   public final static int ATTN_NORM = 1;
   public final static int ATTN_IDLE = 2;
-  public final static int ATTN_STATIC = 3; // diminish very rapidly with distance 
+  public final static int ATTN_STATIC = 3; // diminish very rapidly with distance
 
   //	   player_state->stats[] indexes
   public final static int STAT_HEALTH_ICON = 0;
@@ -545,32 +545,32 @@ public class Constants {
   public final static int STAT_SELECTED_ITEM = 12;
   public final static int STAT_LAYOUTS = 13;
   public final static int STAT_FRAGS = 14;
-  public final static int STAT_FLASHES = 15; // cleared each frame, 1 = health, 2 = armor 
+  public final static int STAT_FLASHES = 15; // cleared each frame, 1 = health, 2 = armor
   public final static int STAT_CHASE = 16;
   public final static int STAT_SPECTATOR = 17;
 
   public final static int MAX_STATS = 32;
 
   //	   dmflags->value flags
-  public final static int DF_NO_HEALTH = 0x00000001; // 1 
-  public final static int DF_NO_ITEMS = 0x00000002; // 2 
-  public final static int DF_WEAPONS_STAY = 0x00000004; // 4 
-  public final static int DF_NO_FALLING = 0x00000008; // 8 
-  public final static int DF_INSTANT_ITEMS = 0x00000010; // 16 
-  public final static int DF_SAME_LEVEL = 0x00000020; // 32 
-  public final static int DF_SKINTEAMS = 0x00000040; // 64 
-  public final static int DF_MODELTEAMS = 0x00000080; // 128 
-  public final static int DF_NO_FRIENDLY_FIRE = 0x00000100; // 256 
-  public final static int DF_SPAWN_FARTHEST = 0x00000200; // 512 
-  public final static int DF_FORCE_RESPAWN = 0x00000400; // 1024 
-  public final static int DF_NO_ARMOR = 0x00000800; // 2048 
-  public final static int DF_ALLOW_EXIT = 0x00001000; // 4096 
-  public final static int DF_INFINITE_AMMO = 0x00002000; // 8192 
-  public final static int DF_QUAD_DROP = 0x00004000; // 16384 
-  public final static int DF_FIXED_FOV = 0x00008000; // 32768 
+  public final static int DF_NO_HEALTH = 0x00000001; // 1
+  public final static int DF_NO_ITEMS = 0x00000002; // 2
+  public final static int DF_WEAPONS_STAY = 0x00000004; // 4
+  public final static int DF_NO_FALLING = 0x00000008; // 8
+  public final static int DF_INSTANT_ITEMS = 0x00000010; // 16
+  public final static int DF_SAME_LEVEL = 0x00000020; // 32
+  public final static int DF_SKINTEAMS = 0x00000040; // 64
+  public final static int DF_MODELTEAMS = 0x00000080; // 128
+  public final static int DF_NO_FRIENDLY_FIRE = 0x00000100; // 256
+  public final static int DF_SPAWN_FARTHEST = 0x00000200; // 512
+  public final static int DF_FORCE_RESPAWN = 0x00000400; // 1024
+  public final static int DF_NO_ARMOR = 0x00000800; // 2048
+  public final static int DF_ALLOW_EXIT = 0x00001000; // 4096
+  public final static int DF_INFINITE_AMMO = 0x00002000; // 8192
+  public final static int DF_QUAD_DROP = 0x00004000; // 16384
+  public final static int DF_FIXED_FOV = 0x00008000; // 32768
 
   //	   RAFAEL
-  public final static int DF_QUADFIRE_DROP = 0x00010000; // 65536 
+  public final static int DF_QUADFIRE_DROP = 0x00010000; // 65536
 
   //	  ROGUE
   public final static int DF_NO_MINES = 0x00020000;
@@ -587,13 +587,13 @@ public class Constants {
   public final static int CS_NAME = 0;
   public final static int CS_CDTRACK = 1;
   public final static int CS_SKY = 2;
-  public final static int CS_SKYAXIS = 3; // %f %f %f format 
+  public final static int CS_SKYAXIS = 3; // %f %f %f format
   public final static int CS_SKYROTATE = 4;
-  public final static int CS_STATUSBAR = 5; // display program string 
+  public final static int CS_STATUSBAR = 5; // display program string
 
-  public final static int CS_AIRACCEL = 29; // air acceleration control 
+  public final static int CS_AIRACCEL = 29; // air acceleration control
   public final static int CS_MAXCLIENTS = 30;
-  public final static int CS_MAPCHECKSUM = 31; // for catching cheater maps 
+  public final static int CS_MAPCHECKSUM = 31; // for catching cheater maps
 
   public final static int CS_MODELS = 32;
   public final static int CS_SOUNDS = (CS_MODELS + MAX_MODELS);
@@ -634,7 +634,7 @@ public class Constants {
   public final static int TE_MEDIC_CABLE_ATTACK = 19;
   public final static int TE_BFG_EXPLOSION = 20;
   public final static int TE_BFG_BIGEXPLOSION = 21;
-  public final static int TE_BOSSTPORT = 22; // used as '22' in a map, so DON'T RENUMBER!!! 
+  public final static int TE_BOSSTPORT = 22; // used as '22' in a map, so DON'T RENUMBER!!!
   public final static int TE_BFG_LASER = 23;
   public final static int TE_GRAPPLE_CABLE = 24;
   public final static int TE_WELDING_SPARKS = 25;
@@ -642,7 +642,7 @@ public class Constants {
   public final static int TE_BLUEHYPERBLASTER = 27;
   public final static int TE_PLASMA_EXPLOSION = 28;
   public final static int TE_TUNNEL_SPARKS = 29;
-  //ROGUE 
+  //ROGUE
   public final static int TE_BLASTER2 = 30;
   public final static int TE_RAILTRAIL2 = 31;
   public final static int TE_FLAME = 32;
@@ -729,7 +729,7 @@ public class Constants {
   public final static int DEFAULT_SHOTGUN_COUNT = 12;
   public final static int DEFAULT_SSHOTGUN_COUNT = 20;
 
-  public final static int ANIM_BASIC = 0; // stand / run 
+  public final static int ANIM_BASIC = 0; // stand / run
   public final static int ANIM_WAVE = 1;
   public final static int ANIM_JUMP = 2;
   public final static int ANIM_PAIN = 3;
@@ -749,17 +749,17 @@ public class Constants {
   public final static float FALL_TIME = 0.3f;
 
   //	damage flags
-  public final static int DAMAGE_RADIUS = 0x00000001; // damage was indirect 
-  public final static int DAMAGE_NO_ARMOR = 0x00000002; // armour does not protect from this damage 
-  public final static int DAMAGE_ENERGY = 0x00000004; // damage is from an energy based weapon 
-  public final static int DAMAGE_NO_KNOCKBACK = 0x00000008; // do not affect velocity, just view angles 
-  public final static int DAMAGE_BULLET = 0x00000010; // damage is from a bullet (used for ricochets) 
+  public final static int DAMAGE_RADIUS = 0x00000001; // damage was indirect
+  public final static int DAMAGE_NO_ARMOR = 0x00000002; // armour does not protect from this damage
+  public final static int DAMAGE_ENERGY = 0x00000004; // damage is from an energy based weapon
+  public final static int DAMAGE_NO_KNOCKBACK = 0x00000008; // do not affect velocity, just view angles
+  public final static int DAMAGE_BULLET = 0x00000010; // damage is from a bullet (used for ricochets)
   public final static int DAMAGE_NO_PROTECTION = 0x00000020;
   // armor, shields, invulnerability, and godmode have no effect
 
   public final static int DAMAGE_NO = 0;
-  public final static int DAMAGE_YES = 1; // will take damage if hit 
-  public final static int DAMAGE_AIM = 2; // auto targeting recognizes this 
+  public final static int DAMAGE_YES = 1; // will take damage if hit
+  public final static int DAMAGE_AIM = 2; // auto targeting recognizes this
 
   //	means of death
   public final static int MOD_UNKNOWN = 0;
@@ -808,25 +808,25 @@ public class Constants {
 
   //	edict->flags
   public final static int FL_FLY = 0x00000001;
-  public final static int FL_SWIM = 0x00000002; // implied immunity to drowining 
+  public final static int FL_SWIM = 0x00000002; // implied immunity to drowining
   public final static int FL_IMMUNE_LASER = 0x00000004;
   public final static int FL_INWATER = 0x00000008;
   public final static int FL_GODMODE = 0x00000010;
   public final static int FL_NOTARGET = 0x00000020;
   public final static int FL_IMMUNE_SLIME = 0x00000040;
   public final static int FL_IMMUNE_LAVA = 0x00000080;
-  public final static int FL_PARTIALGROUND = 0x00000100; // not all corners are valid 
-  public final static int FL_WATERJUMP = 0x00000200; // player jumping out of water 
-  public final static int FL_TEAMSLAVE = 0x00000400; // not the first on the team 
+  public final static int FL_PARTIALGROUND = 0x00000100; // not all corners are valid
+  public final static int FL_WATERJUMP = 0x00000200; // player jumping out of water
+  public final static int FL_TEAMSLAVE = 0x00000400; // not the first on the team
   public final static int FL_NO_KNOCKBACK = 0x00000800;
-  public final static int FL_POWER_ARMOR = 0x00001000; // power armor (if any) is active 
-  public final static int FL_RESPAWN = 0x80000000; // used for item respawning 
+  public final static int FL_POWER_ARMOR = 0x00001000; // power armor (if any) is active
+  public final static int FL_RESPAWN = 0x80000000; // used for item respawning
 
   public final static float FRAMETIME = 0.1f;
 
   //	memory tags to allow dynamic memory to be cleaned up
-  public final static int TAG_GAME = 765; // clear when unloading the dll 
-  public final static int TAG_LEVEL = 766; // clear when loading a new level 
+  public final static int TAG_GAME = 765; // clear when unloading the dll
+  public final static int TAG_LEVEL = 766; // clear when loading a new level
 
   public final static int MELEE_DISTANCE = 80;
 
@@ -905,7 +905,7 @@ public class Constants {
   public final static int PNOISE_IMPACT = 2;
 
   //	gitem_t->flags
-  public final static int IT_WEAPON = 1; // use makes active weapon 
+  public final static int IT_WEAPON = 1; // use makes active weapon
   public final static int IT_AMMO = 2;
   public final static int IT_ARMOR = 4;
   public final static int IT_STAY_COOP = 8;
@@ -926,16 +926,16 @@ public class Constants {
   public final static int WEAP_BFG = 11;
 
   //	edict->movetype values
-  public final static int MOVETYPE_NONE = 0; // never moves 
-  public final static int MOVETYPE_NOCLIP = 1; // origin and angles change with no interaction 
-  public final static int MOVETYPE_PUSH = 2; // no clip to world, push on box contact 
-  public final static int MOVETYPE_STOP = 3; // no clip to world, stops on box contact 
+  public final static int MOVETYPE_NONE = 0; // never moves
+  public final static int MOVETYPE_NOCLIP = 1; // origin and angles change with no interaction
+  public final static int MOVETYPE_PUSH = 2; // no clip to world, push on box contact
+  public final static int MOVETYPE_STOP = 3; // no clip to world, stops on box contact
 
-  public final static int MOVETYPE_WALK = 4; // gravity 
-  public final static int MOVETYPE_STEP = 5; // gravity, special edge handling 
+  public final static int MOVETYPE_WALK = 4; // gravity
+  public final static int MOVETYPE_STEP = 5; // gravity, special edge handling
   public final static int MOVETYPE_FLY = 6;
-  public final static int MOVETYPE_TOSS = 7; // gravity 
-  public final static int MOVETYPE_FLYMISSILE = 8; // extra size to monsters 
+  public final static int MOVETYPE_TOSS = 7; // gravity
+  public final static int MOVETYPE_FLYMISSILE = 8; // extra size to monsters
   public final static int MOVETYPE_BOUNCE = 9;
 
   public final static int MULTICAST_ALL = 0;
@@ -956,9 +956,9 @@ public class Constants {
   public final static int GAME_API_VERSION = 3;
 
   //	   edict->svflags
-  public final static int SVF_NOCLIENT = 0x00000001; // don't send entity to clients, even if it has effects 
-  public final static int SVF_DEADMONSTER = 0x00000002; // treat as CONTENTS_DEADMONSTER for collision 
-  public final static int SVF_MONSTER = 0x00000004; // treat as CONTENTS_MONSTER for collision 
+  public final static int SVF_NOCLIENT = 0x00000001; // don't send entity to clients, even if it has effects
+  public final static int SVF_DEADMONSTER = 0x00000002; // treat as CONTENTS_DEADMONSTER for collision
+  public final static int SVF_MONSTER = 0x00000004; // treat as CONTENTS_MONSTER for collision
 
   public final static int MAX_ENT_CLUSTERS = 16;
 
@@ -981,7 +981,7 @@ public class Constants {
   public final static int DOOR_X_AXIS = 64;
   public final static int DOOR_Y_AXIS = 128;
 
-  // R E N D E R E R 
+  // R E N D E R E R
   ////////////////////
   public static final int MAX_DLIGHTS = 32;
   public static final int MAX_ENTITIES = 128;
@@ -1028,18 +1028,18 @@ public class Constants {
   public final static int svc_nop = 6;
   public final static int svc_disconnect = 7;
   public final static int svc_reconnect = 8;
-  public final static int svc_sound = 9; // <see code> 
-  public final static int svc_print = 10; // [byte] id [string] null terminated string 
+  public final static int svc_sound = 9; // <see code>
+  public final static int svc_print = 10; // [byte] id [string] null terminated string
   public final static int svc_stufftext = 11;
   // [string] stuffed into client's console buffer, should be \n terminated
-  public final static int svc_serverdata = 12; // [long] protocol ... 
-  public final static int svc_configstring = 13; // [short] [string] 
+  public final static int svc_serverdata = 12; // [long] protocol ...
+  public final static int svc_configstring = 13; // [short] [string]
   public final static int svc_spawnbaseline = 14;
-  public final static int svc_centerprint = 15; // [string] to put in center of the screen 
-  public final static int svc_download = 16; // [short] size [size bytes] 
-  public final static int svc_playerinfo = 17; // variable 
-  public final static int svc_packetentities = 18; // [...] 
-  public final static int svc_deltapacketentities = 19; // [...] 
+  public final static int svc_centerprint = 15; // [string] to put in center of the screen
+  public final static int svc_download = 16; // [short] size [size bytes]
+  public final static int svc_playerinfo = 17; // variable
+  public final static int svc_packetentities = 18; // [...]
+  public final static int svc_deltapacketentities = 19; // [...]
   public final static int svc_frame = 20;
 
   public static final int NUMVERTEXNORMALS = 162;
@@ -1057,7 +1057,7 @@ public class Constants {
   public final static int PS_M_GRAVITY = (1 << 5);
   public final static int PS_M_DELTA_ANGLES = (1 << 6);
 
-  public final static int UPDATE_BACKUP = 16; // copies of entity_state_t to keep buffered 
+  public final static int UPDATE_BACKUP = 16; // copies of entity_state_t to keep buffered
   // must be power of two
   public final static int UPDATE_MASK = (UPDATE_BACKUP - 1);
 
@@ -1084,32 +1084,32 @@ public class Constants {
   public final static int U_ORIGIN2 = (1 << 1);
   public final static int U_ANGLE2 = (1 << 2);
   public final static int U_ANGLE3 = (1 << 3);
-  public final static int U_FRAME8 = (1 << 4); // frame is a byte 
+  public final static int U_FRAME8 = (1 << 4); // frame is a byte
   public final static int U_EVENT = (1 << 5);
-  public final static int U_REMOVE = (1 << 6); // REMOVE this entity, don't add it 
-  public final static int U_MOREBITS1 = (1 << 7); // read one additional byte 
+  public final static int U_REMOVE = (1 << 6); // REMOVE this entity, don't add it
+  public final static int U_MOREBITS1 = (1 << 7); // read one additional byte
 
   // second byte
-  public final static int U_NUMBER16 = (1 << 8); // NUMBER8 is implicit if not set 
+  public final static int U_NUMBER16 = (1 << 8); // NUMBER8 is implicit if not set
   public final static int U_ORIGIN3 = (1 << 9);
   public final static int U_ANGLE1 = (1 << 10);
   public final static int U_MODEL = (1 << 11);
-  public final static int U_RENDERFX8 = (1 << 12); // fullbright, etc 
-  public final static int U_EFFECTS8 = (1 << 14); // autorotate, trails, etc 
-  public final static int U_MOREBITS2 = (1 << 15); // read one additional byte 
+  public final static int U_RENDERFX8 = (1 << 12); // fullbright, etc
+  public final static int U_EFFECTS8 = (1 << 14); // autorotate, trails, etc
+  public final static int U_MOREBITS2 = (1 << 15); // read one additional byte
 
   // third byte
   public final static int U_SKIN8 = (1 << 16);
-  public final static int U_FRAME16 = (1 << 17); // frame is a short 
-  public final static int U_RENDERFX16 = (1 << 18); // 8 + 16 = 32 
-  public final static int U_EFFECTS16 = (1 << 19); // 8 + 16 = 32 
-  public final static int U_MODEL2 = (1 << 20); // weapons, flags, etc 
+  public final static int U_FRAME16 = (1 << 17); // frame is a short
+  public final static int U_RENDERFX16 = (1 << 18); // 8 + 16 = 32
+  public final static int U_EFFECTS16 = (1 << 19); // 8 + 16 = 32
+  public final static int U_MODEL2 = (1 << 20); // weapons, flags, etc
   public final static int U_MODEL3 = (1 << 21);
   public final static int U_MODEL4 = (1 << 22);
-  public final static int U_MOREBITS3 = (1 << 23); // read one additional byte 
+  public final static int U_MOREBITS3 = (1 << 23); // read one additional byte
 
   // fourth byte
-  public final static int U_OLDORIGIN = (1 << 24); // FIXME: get rid of this 
+  public final static int U_OLDORIGIN = (1 << 24); // FIXME: get rid of this
   public final static int U_SKIN16 = (1 << 25);
   public final static int U_SOUND = (1 << 26);
   public final static int U_SOLID = (1 << 27);
@@ -1140,11 +1140,11 @@ public class Constants {
   public static final int NA_IPX = 3;
   public static final int NA_BROADCAST_IPX = 4;
 
-  public final static int SND_VOLUME = (1 << 0); // a byte 
-  public final static int SND_ATTENUATION = (1 << 1); // a byte 
-  public final static int SND_POS = (1 << 2); // three coordinates 
-  public final static int SND_ENT = (1 << 3); // a short 0-2: channel, 3-12: entity 
-  public final static int SND_OFFSET = (1 << 4); // a byte, msec offset from frame start 
+  public final static int SND_VOLUME = (1 << 0); // a byte
+  public final static int SND_ATTENUATION = (1 << 1); // a byte
+  public final static int SND_POS = (1 << 2); // three coordinates
+  public final static int SND_ENT = (1 << 3); // a short 0-2: channel, 3-12: entity
+  public final static int SND_OFFSET = (1 << 4); // a byte, msec offset from frame start
 
   public final static float DEFAULT_SOUND_PACKET_VOLUME = 1.0f;
   public final static float DEFAULT_SOUND_PACKET_ATTENUATION = 1.0f;
@@ -1154,7 +1154,7 @@ public class Constants {
   public static final int MAX_PARSE_ENTITIES = 1024;
   public static final int MAX_CLIENTWEAPONMODELS = 20;
 
-  public static int CMD_BACKUP = 64; // allow a lot of command backups for very fast systems	
+  public static int CMD_BACKUP = 64; // allow a lot of command backups for very fast systems
 
   public static final int ca_uninitialized = 0;
   public static final int ca_disconnected = 1;
@@ -1175,7 +1175,7 @@ public class Constants {
   public final static int BSPVERSION = 38;
 
   // --------
-  // qfiles.h 
+  // qfiles.h
 
   // upper design bounds
   // leaffaces, leafbrushes, planes, and verts are still bounded by
@@ -1360,5 +1360,5 @@ public class Constants {
   public final static int SIZE_OF_DOUBLE = 8;
   public static final String __DATE__ = "2003";
   public static final float VERSION = 3.21f;
-  public static final String BASEDIRNAME = "baseq2";
+  public static final String BASEDIRNAME = "war/baseq2";
 }

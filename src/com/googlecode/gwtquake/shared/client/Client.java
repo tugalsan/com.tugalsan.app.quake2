@@ -40,14 +40,14 @@ import com.googlecode.gwtquake.shared.util.*;
  */
 public final class Client {
   public static final int PLAYER_MULT = 5;
-  
+
   //       ENV_CNT is map load, ENV_CNT+1 is first env map
-  public static final int ENV_CNT = 
+  public static final int ENV_CNT =
     (Constants.CS_PLAYERSKINS + Constants.MAX_CLIENTS * Client.PLAYER_MULT);
 
   public static final int TEXTURE_CNT = (ENV_CNT + 13);
 
-  
+
   static int precache_check; // for autodownload of precache items
   static int precache_spawncount;
   static int precache_tex;
@@ -60,18 +60,18 @@ public final class Client {
     ConsoleVariable var;
   }
 
-  public static String cheatvarsinfo[][] = { 
+  public static String cheatvarsinfo[][] = {
     {"timescale", "1" },
     {"timedemo", "0" },
     {"r_drawworld", "1" },
     {"cl_testlights", "0" },
     {"r_fullbright", "0" },
-    {"r_drawflat", "0" }, 
-    {"paused", "0" }, 
+    {"r_drawflat", "0" },
+    {"paused", "0" },
     {"fixedtime", "0" },
-    {"sw_draworder", "0" }, 
+    {"sw_draworder", "0" },
     {"gl_lightmap", "0" },
-    {"gl_saturatelighting", "0" }, 
+    {"gl_saturatelighting", "0" },
     {null, null}
   };
 
@@ -89,7 +89,7 @@ public final class Client {
 
   /**
    * Stop_f
-   * 
+   *
    * Stop recording a demo.
    */
   static ExecutableCommand stopCommand = new ExecutableCommand() {
@@ -119,7 +119,7 @@ public final class Client {
 
   /**
    * Record_f
-   * 
+   *
    * record &lt;demoname&gt;
    * Begins recording a demo from the current position.
    */
@@ -183,7 +183,7 @@ public final class Client {
         for (i = 0; i < Constants.MAX_CONFIGSTRINGS; i++) {
           if (Globals.cl.configstrings[i].length() > 0) {
             if (buf.cursize + Globals.cl.configstrings[i].length()
-                + 32 > buf.maxsize) { 
+                + 32 > buf.maxsize) {
               // write it out
               Globals.cls.demofile.writeInt(EndianHandler.swapInt(buf.cursize));
               Globals.cls.demofile
@@ -311,7 +311,7 @@ public final class Client {
 
   /**
    * Rcon_f
-   * 
+   *
    * Send the rest of the command line over as an unconnected command.
    */
   static ExecutableCommand rconCommand = new ExecutableCommand() {
@@ -368,7 +368,7 @@ public final class Client {
 
   /**
    * Changing_f
-   * 
+   *
    * Just sent as a hint to the client that they should drop to full console.
    */
   static ExecutableCommand changingCommand = new ExecutableCommand() {
@@ -389,7 +389,7 @@ public final class Client {
 
   /**
    * Reconnect_f
-   * 
+   *
    * The server is changing levels.
    */
   static ExecutableCommand reconnectCommand = new ExecutableCommand() {
@@ -483,7 +483,7 @@ public final class Client {
 
   /**
    * Skins_f
-   * 
+   *
    * Load or download any custom player skins and models.
    */
   static ExecutableCommand skinsCommand = new ExecutableCommand() {
@@ -515,7 +515,7 @@ public final class Client {
 
   /**
    * Snd_Restart_f
-   * 
+   *
    * Restart the sound subsystem so it can pick up new parameters and flush
    * all sounds.
    */
@@ -564,7 +564,7 @@ public final class Client {
 
   /**
    * Shutdown
-   * 
+   *
    * FIXME: this is a callback from Sys_Quit and Com_Error. It would be better
    * to run quit through here before the final handoff to the sys code.
    */
@@ -572,7 +572,7 @@ public final class Client {
 
   /**
    * WriteDemoMessage
-   * 
+   *
    * Dumps the current net message, prefixed by the length
    */
   static void writeDemoMessage() {
@@ -591,7 +591,7 @@ public final class Client {
 
   /**
    * SendConnectPacket
-   * 
+   *
    * We have gotten a challenge from the server, so try and connect.
    */
   static void sendConnectPacket() {
@@ -617,7 +617,7 @@ public final class Client {
 
   /**
    * CheckForResend
-   * 
+   *
    * Resend a connect message if the last one has timed out.
    */
   static void checkForResend() {
@@ -659,7 +659,7 @@ public final class Client {
 
   /**
    * ClearState
-   * 
+   *
    */
   static void clearState() {
     Sound.StopAllSounds();
@@ -678,7 +678,7 @@ public final class Client {
 
   /**
    * Disconnect
-   * 
+   *
    * Goes from a connected state to full screen console state Sends a
    * disconnect message to the server This is also called on Com_Error, so it
    * shouldn't cause any errors.
@@ -733,7 +733,7 @@ public final class Client {
 
   /**
    * ParseStatusMessage
-   * 
+   *
    * Handle a reply from a ping.
    */
   static void parseStatusMessage() {
@@ -747,7 +747,7 @@ public final class Client {
 
   /**
    * ConnectionlessPacket
-   * 
+   *
    * Responses to broadcasts, etc
    */
   static void connectionlessPacket() {
@@ -771,8 +771,7 @@ public final class Client {
         Com.Printf("Dup connect received.  Ignored.\n");
         return;
       }
-      NetworkChannel.Setup(Globals.cls.netchan, Constants.NS_CLIENT,
-          Globals.net_from, Globals.cls.quakePort);
+      NetworkChannel.Setup(Globals.cls.netchan, Constants.NS_CLIENT, Globals.net_from, Globals.cls.quakePort);
       Buffers.writeByte(Globals.cls.netchan.message, Constants.clc_stringcmd);
       Buffers.WriteString(Globals.cls.netchan.message, "new");
       Globals.cls.state = Constants.ca_connected;
@@ -837,7 +836,7 @@ public final class Client {
 
       //
       // remote command packet
-      //		
+      //
       if (Globals.net_message.data[0] == -1
           && Globals.net_message.data[1] == -1
           && Globals.net_message.data[2] == -1
@@ -1081,23 +1080,23 @@ public final class Client {
       //                    }
       //
       //                    int pos = Globals.cl.configstrings[Defines.CS_PLAYERSKINS + i].indexOf('\\');
-      //                    
+      //
       //                    if (pos != -1)
       //                        pos++;
       //                    else
       //                        pos = 0;
       //
       //                    int pos2 = Globals.cl.configstrings[Defines.CS_PLAYERSKINS + i].indexOf('\\', pos);
-      //                    
+      //
       //                    if (pos2 == -1)
       //                        pos2 = Globals.cl.configstrings[Defines.CS_PLAYERSKINS + i].indexOf('/', pos);
-      //                    
-      //                    
+      //
+      //
       //                    model = Globals.cl.configstrings[Defines.CS_PLAYERSKINS + i]
       //                            .substring(pos, pos2);
-      //                                        
+      //
       //                    skin = Globals.cl.configstrings[Defines.CS_PLAYERSKINS + i].substring(pos2 + 1);
-      //                    
+      //
       //                    switch (n) {
       //                    case 0: // model
       //                        fn = "players/" + model + "/tris.md2";
@@ -1384,7 +1383,7 @@ public final class Client {
 
   /**
    * WriteConfiguration
-   * 
+   *
    * Writes key bindings and archived cvars to config.cfg.
    */
   public static void writeConfiguration() {

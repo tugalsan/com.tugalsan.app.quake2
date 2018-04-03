@@ -15,7 +15,6 @@ See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
 */
 /* Modifications
    Copyright 2003-2004 Bytonic Software
@@ -31,10 +30,9 @@ import com.googlecode.gwtquake.shared.render.Image;
 import com.googlecode.gwtquake.shared.render.Model;
 import com.googlecode.gwtquake.shared.sys.KBD;
 
-
 /**
  * refexport_t
- * 
+ *
  * @author cwei
  */
 public interface Renderer {
@@ -91,7 +89,7 @@ public interface Renderer {
 
 	// Draw images for cinematic rendering (which can have a different palette). Note that calls
 	void DrawStretchRaw(int x,	int y, int w, int h, int cols, int rows, byte[] data);
-	
+
 	/*
 	** video mode and refresh state management entry points
 	*/
@@ -101,11 +99,11 @@ public interface Renderer {
 	void EndFrame();
 
 	void AppActivate(boolean activate);
-	
+
 	void updateScreen(ExecutableCommand callback);
-	
+
 	int apiVersion();
-	
+
 	KBD getKeyboardHandler();
 
 	int GLimp_SetMode(Dimension dimension, int i, boolean b);
@@ -117,9 +115,8 @@ public interface Renderer {
       int scaled_width, int scaled_height);
 
   Image GL_LoadNewImage(String name, int type);
-  
-  public DisplayMode[] getAvailableDisplayModes();
-  
-  public DisplayMode getDisplayMode();
 
+  public DisplayMode[] getAvailableDisplayModes();
+
+  public DisplayMode getDisplayMode();
 }

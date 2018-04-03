@@ -31,10 +31,8 @@ import javax.servlet.http.HttpServletResponse;
 
 public class GwtQuakeServlet extends HttpServlet {
 
-
-    @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse rsp)
-      throws ServletException, IOException {
+  @Override
+  protected void doGet(HttpServletRequest req, HttpServletResponse rsp) throws ServletException, IOException {
     File f = new File("war/GwtQuake.html");
     DataInputStream in = new DataInputStream(new FileInputStream(f));
     byte[] bytes = new byte[in.available()];
@@ -49,5 +47,4 @@ public class GwtQuakeServlet extends HttpServlet {
     rsp.flushBuffer();
     rsp.setStatus(200);
   }
-
 }

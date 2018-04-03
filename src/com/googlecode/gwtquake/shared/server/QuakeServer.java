@@ -15,8 +15,7 @@
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
- */
+*/
 /* Modifications
    Copyright 2003-2004 Bytonic Software
    Copyright 2010 Google Inc.
@@ -25,7 +24,6 @@ package com.googlecode.gwtquake.shared.server;
 
 import static com.googlecode.gwtquake.shared.common.Constants.CVAR_NOSET;
 
-import com.googlecode.gwtquake.shared.common.CommandBuffer;
 import com.googlecode.gwtquake.shared.common.Compatibility;
 import com.googlecode.gwtquake.shared.common.ConsoleVariables;
 import com.googlecode.gwtquake.shared.common.Globals;
@@ -35,12 +33,7 @@ import com.googlecode.gwtquake.shared.sound.DummyDriver;
 import com.googlecode.gwtquake.shared.sound.Sound;
 import com.googlecode.gwtquake.shared.sys.Timer;
 
-
 public class QuakeServer {
-
-//  public static final String BUILDSTRING = "Java "
-//      + System.getProperty("java.version");
-//  public static final String CPUSTRING = System.getProperty("os.arch");
 
   public static void run(String[] args) {
     Globals.dedicated = ConsoleVariables.Get("dedicated", "1", CVAR_NOSET);
@@ -61,11 +54,6 @@ public class QuakeServer {
     Sound.impl = new DummyDriver();
     QuakeCommon.Init(c_args);
 
-    
-    // Start off on map demo1.
-//    Cbuf.AddText("begin\n");
-//    Cbuf.Execute();
-
     long oldtime = Timer.Milliseconds();
     long newtime;
     long time;
@@ -85,5 +73,4 @@ public class QuakeServer {
       oldtime = newtime;
     }
   }
-  
 }

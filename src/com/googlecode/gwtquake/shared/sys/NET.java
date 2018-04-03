@@ -1,21 +1,21 @@
 /*
  * Copyright (C) 1997-2001 Id Software, Inc.
- * 
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
  * Foundation; either version 2 of the License, or (at your option) any later
  * version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.
- * 
+ *
  * See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along with
  * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  * Place - Suite 330, Boston, MA 02111-1307, USA.
- *  
+ *
  */
 /* Modifications
    Copyright 2003-2004 Bytonic Software
@@ -40,7 +40,7 @@ import com.googlecode.gwtquake.shared.util.Lib;
 public final class NET {
 
 	public static QuakeSocketFactory socketFactory;
-	
+
     private final static int MAX_LOOPBACK = 4;
 
     /** Local loopback adress. */
@@ -50,7 +50,7 @@ public final class NET {
         byte data[] = new byte[Constants.MAX_MSGLEN];
 
         int datalen;
-    };
+    }
 
     public static class loopback_t {
         public loopback_t() {
@@ -63,7 +63,7 @@ public final class NET {
         loopmsg_t msgs[];
 
         int get, send;
-    };
+    }
 
     public static loopback_t loopbacks[] = new loopback_t[2];
     static {
@@ -153,9 +153,9 @@ public final class NET {
 
     /*
      * ==================================================
-     * 
+     *
      * LOOPBACK BUFFERS FOR LOCAL PLAYER
-     * 
+     *
      * ==================================================
      */
 
@@ -250,7 +250,7 @@ public final class NET {
      * Sends a Packet.
      */
     public static void SendPacket(int sock, int length, byte[] data, NetworkAddress to) {
-    	    	
+
         if (to.type == Constants.NA_LOOPBACK) {
             SendLoopPacket(sock, length, data, to);
             return;
@@ -259,7 +259,7 @@ public final class NET {
         if (ip_sockets[sock] == null) {
             return;
         }
-        
+
         if (to.type != Constants.NA_BROADCAST && to.type != Constants.NA_IP) {
             Com.Error(Constants.ERR_FATAL, "NET_SendPacket: bad address type");
             return;
@@ -273,7 +273,7 @@ public final class NET {
     }
 
     /**
-     * OpenIP, creates the network sockets. 
+     * OpenIP, creates the network sockets.
      */
     private static void OpenIP() {
         ConsoleVariable port, ip, clientport;
@@ -281,17 +281,13 @@ public final class NET {
         port = ConsoleVariables.Get("port", "" + Constants.PORT_SERVER, Constants.CVAR_NOSET);
         ip = ConsoleVariables.Get("ip", "localhost", Constants.CVAR_NOSET);
         clientport = ConsoleVariables.Get("clientport", "" + Constants.PORT_CLIENT, Constants.CVAR_NOSET);
-        
+
         if (ip_sockets[Constants.NS_SERVER] == null)
-            ip_sockets[Constants.NS_SERVER] = Socket(Constants.NS_SERVER,
-                    ip.string, (int) port.value);
-        
+            ip_sockets[Constants.NS_SERVER] = Socket(Constants.NS_SERVER, ip.string, (int) port.value);
         if (ip_sockets[Constants.NS_CLIENT] == null)
-            ip_sockets[Constants.NS_CLIENT] = Socket(Constants.NS_CLIENT,
-                    ip.string, (int) clientport.value);
-        if (ip_sockets[Constants.NS_CLIENT] == null)
-            ip_sockets[Constants.NS_CLIENT] = Socket(Constants.NS_CLIENT,
-                    ip.string, Constants.PORT_ANY);
+            ip_sockets[Constants.NS_CLIENT] = Socket(Constants.NS_CLIENT, ip.string, (int) clientport.value);
+//        if (ip_sockets[Constants.NS_CLIENT] == null)
+//            ip_sockets[Constants.NS_CLIENT] = Socket(Constants.NS_CLIENT, ip.string, Constants.PORT_ANY);
     }
 
     /**
@@ -305,7 +301,7 @@ public final class NET {
                     try {
 						ip_sockets[i].close();
 					} catch (IOException e) {
-						
+
 						e.printStackTrace();
 					}
                     ip_sockets[i] = null;
@@ -328,23 +324,14 @@ public final class NET {
      * Socket
      */
     private static QuakeSocket Socket(int sock, String ip, int port) {
-
         QuakeSocket newsocket = null;
         try {
-            if (ip == null || ip.length() == 0 || ip.equals("localhost")) {
-                if (port == Constants.PORT_ANY) {
-                    newsocket = socketFactory.bind(null, 0);
-                } else {
-                    newsocket = socketFactory.bind(null, port);
-                }
-            } else {
-                newsocket = socketFactory.bind(ip, port);
-            }
+          newsocket = socketFactory.bind(sock == Constants.NS_SERVER);
 
-            // nonblocking channel
-//            ip_channels[sock].configureBlocking(false);
-            // the socket have to be broadcastable
-//            newsocket.setBroadcast(true);
+//          // nonblocking channel
+//          ip_channels[sock].configureBlocking(false);
+//          // the socket have to be broadcastable
+//          newsocket.setBroadcast(true);
         } catch (Exception e) {
             Com.Println("Error: " + e.toString());
         	Compatibility.printStackTrace(e);
@@ -354,7 +341,7 @@ public final class NET {
     }
 
     /**
-     * Shutdown - closes the sockets 
+     * Shutdown - closes the sockets
      */
     public static void Shutdown() {
         // close sockets
@@ -367,31 +354,31 @@ public final class NET {
                 || (Globals.dedicated != null && Globals.dedicated.value == 0))
             return; // we're not a server, just run full speed
 
-      
+
             //TODO: check for timeout
             Compatibility.sleep(msec);
         //ip_sockets[NS_SERVER].
 
         // this should wait up to 100ms until a packet
         /*
-         * struct timeval timeout; 
-         * fd_set fdset; 
+         * struct timeval timeout;
+         * fd_set fdset;
          * extern cvar_t *dedicated;
          * extern qboolean stdin_active;
-         * 
+         *
          * if (!ip_sockets[NS_SERVER] || (dedicated && !dedicated.value))
          * 		return; // we're not a server, just run full speed
-         * 
+         *
          * FD_ZERO(&fdset);
-         *  
-         * if (stdin_active) 
-         * 		FD_SET(0, &fdset); // stdin is processed too 
-         * 
-         * FD_SET(ip_sockets[NS_SERVER], &fdset); // network socket 
-         * 
-         * timeout.tv_sec = msec/1000; 
-         * timeout.tv_usec = (msec%1000)*1000; 
-         * 
+         *
+         * if (stdin_active)
+         * 		FD_SET(0, &fdset); // stdin is processed too
+         *
+         * FD_SET(ip_sockets[NS_SERVER], &fdset); // network socket
+         *
+         * timeout.tv_sec = msec/1000;
+         * timeout.tv_usec = (msec%1000)*1000;
+         *
          * select(ip_sockets[NS_SERVER]+1, &fdset, NULL, NULL, &timeout);
          */
     }

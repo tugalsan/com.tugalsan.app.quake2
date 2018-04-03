@@ -62,8 +62,7 @@ public class Unpak {
     new WAVConverter();
   }
 
-  private static final int IDPAKHEADER = (('K' << 24) + ('C' << 16)
-      + ('A' << 8) + 'P');
+  private static final int IDPAKHEADER = (('K' << 24) + ('C' << 16) + ('A' << 8) + 'P');
   private static final int MAX_FILES_IN_PACK = 4096;
   private static byte[] tmpText = new byte[packfile_t.NAME_SIZE];
   private static File indir, outdir;
@@ -124,7 +123,7 @@ public class Unpak {
     System.out.println(filename);
 
     Converter converter = Converter.get(filename);
-    String destName = converter == null ? filename : 
+    String destName = converter == null ? filename :
     		replaceExtension(filename, converter.getOutExt());
 
     String canonicalPath = new File(outdir, destName).getCanonicalPath();
@@ -148,7 +147,7 @@ public class Unpak {
           jsName = jsName.substring(0, cut);
           imageSizes.write("'" + jsName + "':["+size[0] + ","+ size[1] +"],\n");
       }
-      
+
     } else {
       // Just copy it directly.
       FileOutputStream outStream = new FileOutputStream(outFile);

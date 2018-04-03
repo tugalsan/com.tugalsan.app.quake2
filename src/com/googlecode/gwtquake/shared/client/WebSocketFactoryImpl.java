@@ -15,13 +15,10 @@ See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
 */
 package com.googlecode.gwtquake.shared.client;
 
-
 import java.io.IOException;
-import java.net.InetAddress;
 import java.util.LinkedList;
 
 import com.google.gwt.corp.websocket.CloseEvent;
@@ -33,96 +30,92 @@ import com.googlecode.gwtquake.shared.common.NetworkAddress;
 import com.googlecode.gwtquake.shared.sys.QuakeSocket;
 import com.googlecode.gwtquake.shared.sys.QuakeSocketFactory;
 
-
 public class WebSocketFactoryImpl implements QuakeSocketFactory {
 
-	public QuakeSocket bind(String ip, int port) {
-		return new GwtWebSocketImpl(ip, port);
-	}
+  public QuakeSocket bind(boolean server) {
+    if (!server) {
+      return new GwtWebSocketImpl();
+    }
+    return null;
+  }
 }
 
 class GwtWebSocketImpl implements QuakeSocket {
+//  private String ip;
+  private WebSocket socket;
+  private boolean connected;
+  private LinkedList<String> msgQueue = new LinkedList<String>();
+//  private int localPort;
+  private int remotePort;
+  private byte[] remoteIp;
 
-	private String ip;
-	private WebSocket socket;
-	private boolean connected;
-	private LinkedList<String> msgQueue = new LinkedList<String>();
-	private int localPort;
-	private int remotePort;
-	private byte[] remoteIp;
-	
-	public GwtWebSocketImpl(String ip, int localPort)  {
-		this.ip = ip;
-		this.localPort = localPort;
+  public GwtWebSocketImpl() {
+//    this.ip = ip;
+//    this.localPort = localPort;
+//    System.out.println("Creating GwtWebSocketImpl(" + localPort + ")");
+  }
 
-		System.out.println("Creating GwtWebSocketImpl(" + localPort + ")");
-	  
-	}
+  public void close() throws IOException {
+    System.out.println("closing");
+    if (socket != null) {
+      socket.setListener(null);
+    }
+    if (connected) {
+      socket.close();
+      connected = false;
+    }
+    socket = null;
+  }
 
-	public void close() throws IOException {
-		System.out.println("closing");
-		if (socket != null) {
-			socket.setListener(null);
-		}
-		if (connected) {
-			socket.close();
-			connected = false;
-		}
-	    socket = null;
-	}
+  public int receive(NetworkAddress address, byte[] buf) throws IOException {
+    if (msgQueue.isEmpty()) {
+      return -1;
+    }
 
-	public int receive(NetworkAddress address, byte[] buf) throws IOException {
-		if (msgQueue.isEmpty()) { 
-			return -1;
-		}
+    String s = msgQueue.remove();
+    int len = Compatibility.stringToBytes(s, buf);
 
-		String s = msgQueue.remove();
-		int len = Compatibility.stringToBytes(s, buf);
-		
 //		System.out.println("receiving: " + Lib.hexDump(buf, len, false));
-		
-		address.ip = new byte[4];
-		System.arraycopy(remoteIp, 0, address.ip, 0, 4);
-		address.port = remotePort;
-		
-		return len;
-	}
 
-	public void send(NetworkAddress adr, byte[] buf, int len) throws IOException {
-		// TODO(haustein): check if addess still matches?
+    address.ip = new byte[4];
+    System.arraycopy(remoteIp, 0, address.ip, 0, 4);
+    address.port = remotePort;
 
-		if (socket == null) {
-			remotePort = adr.port;
-			remoteIp = new byte[4];
-			System.arraycopy(adr.ip, 0, remoteIp, 0, 4);
-			
-			String url = "ws://" + InetAddress.getByAddress(adr.ip).getHostAddress()
-			+ ":" + adr.port;
-			System.out.println("connect for send to: " + url);
-			
-			socket = WebSocket.create(url, "" + localPort);
-			
-			System.out.println("socket: " + socket);
+    return len;
+  }
 
-		    socket.setListener(new WebSocket.Listener() {
-		      public void onOpen(WebSocket socket, OpenEvent event) {
-		        connected = true;
-		      }
+  public void send(NetworkAddress adr, byte[] buf, int len) throws IOException {
+    // TODO(haustein): check if addess still matches?
+    if (socket == null) {
+      remotePort = adr.port;
+      remoteIp = new byte[4];
+      System.arraycopy(adr.ip, 0, remoteIp, 0, 4);
 
-		      public void onMessage(WebSocket socket, MessageEvent event) {
-		        String data = event.getData();
-		        msgQueue.add(data);
-		      }
+      String url = "ws://localhost:8080/ws/";
+      System.out.println("connect for send to: " + url);
+      socket = WebSocket.create(url);
 
-		      public void onClose(WebSocket socket, CloseEvent event) {
-		        connected = false;
-		      }
-		    });		
-		}
-		
+      System.out.println("socket: " + socket);
+
+      socket.setListener(new WebSocket.Listener() {
+        public void onOpen(WebSocket socket, OpenEvent event) {
+          connected = true;
+        }
+
+        public void onMessage(WebSocket socket, MessageEvent event) {
+          String data = event.getData();
+          msgQueue.add(data);
+        }
+
+        public void onClose(WebSocket socket, CloseEvent event) {
+          connected = false;
+        }
+      });
+    }
+
 //		System.out.println("sending: " + connected+ " " + Lib.hexDump(buf, len, false));
-		if (connected) {
-			socket.send(Compatibility.bytesToString(buf, len));
-		} 
-	}
+    if (connected) {
+      socket.send(Compatibility.bytesToString(buf, len));
+    }
+  }
 }

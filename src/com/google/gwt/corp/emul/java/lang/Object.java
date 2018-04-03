@@ -1,5 +1,5 @@
 /*
- * Copyright 2010 Google Inc.
+ * Copyright 2008 Google Inc.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -26,6 +26,14 @@ import com.google.gwt.core.client.impl.Impl;
 public class Object {
 
   /**
+   * Holds class literal for subtypes of Object.
+   */
+  // BUG: If this field name conflicts with a method param name, JDT will complain
+  // CHECKSTYLE_OFF
+  private transient Class<?> ___clazz;
+  // CHECKSTYLE_ON
+
+  /**
    * Used by {@link com.google.gwt.core.client.impl.WeakMapping} in web mode
    * to store an expando containing a String -> Object mapping.
    * 
@@ -43,7 +51,12 @@ public class Object {
   private transient JavaScriptObject castableTypeMap;
 
   /**
-   * magic magic magic.
+   * A special marker field used internally to the GWT compiler. For example, it
+   * is used for distinguishing whether an object is a Java object or a
+   * JavaScriptObject. It is also used to differentiate our own Java objects
+   * from foreign objects in a different module on the same page.
+   * 
+   * @see com.google.gwt.lang.Cast
    * 
    * @skip
    */
@@ -55,14 +68,11 @@ public class Object {
   }
 
   /*
-   * Magic; unlike the real JRE, we don't spec this method as final. The
-   * compiler will generate a polymorphic override on every other class which
-   * will return the correct class object.
-   * 
-   * TODO(scottb): declare this final, but have the compiler fix it up.
+   * magic; Actual assignment to this field is done by Class.createFor() methods by injecting it
+   * into the prototype.
    */
   public Class<? extends Object> getClass() {
-    return Object.class;
+    return ___clazz;
   }
 
   public int hashCode() {
@@ -74,7 +84,7 @@ public class Object {
   }
 
   /**
-   * Never called; here for compatibility.
+   * Never called; here for JRE compatibility.
    * 
    * @skip
    */

@@ -1,0 +1,10 @@
+build
+clean
+clean-resources
+client.run
+install-resources
+libs
+run
+serve
+server
+war

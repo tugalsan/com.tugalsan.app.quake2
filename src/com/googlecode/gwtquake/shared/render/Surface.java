@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -559,13 +559,11 @@ public class Surface {
         os = p.getS1(i);
         ot = p.getT1(i);
 
-        s = os
-            + GlConstants.SIN[(int) ((ot * 0.125f + GlState.r_newrefdef.time) * GlConstants.TURBSCALE) & 255];
+        s = os + GlConstants.SIN[(int) ((ot * 0.125f + GlState.r_newrefdef.time) * GlConstants.TURBSCALE) & 255];
         s += scroll;
         s *= (1.0f / 64);
 
-        t = ot
-            + GlConstants.SIN[(int) ((os * 0.125f + rdt) * GlConstants.TURBSCALE) & 255];
+        t = ot + GlConstants.SIN[(int) ((os * 0.125f + rdt) * GlConstants.TURBSCALE) & 255];
         t *= (1.0f / 64);
 
         GlState.gl.glTexCoord2f(s, t);
@@ -682,7 +680,7 @@ public class Surface {
 
   /**
    * GL_RenderLightmappedPoly
-   * 
+   *
    * @param surf
    */
   static void GL_RenderLightmappedPoly(Surface surf) {

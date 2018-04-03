@@ -58,11 +58,11 @@ import java.util.Vector;
 
 /**
  * Model
- *  
+ *
  * @author cwei
  */
 public class Models  {
-	
+
 	// models.c -- model loading and caching
 	static Model	loadmodel;
 	static int modfilelen;
@@ -87,7 +87,7 @@ public class Models  {
 		Node node;
 		float	d;
 		Plane plane;
-	
+
 		if (model == null || model.nodes == null)
 			Com.Error (Constants.ERR_DROP, "Mod_PointInLeaf: bad model");
 
@@ -96,7 +96,7 @@ public class Models  {
 		{
 			if (node.contents != -1)
 				return (Leaf)node;
-				
+
 			plane = node.plane;
 			d = Math3D.DotProduct(p, plane.normal) - plane.dist;
 			if (d > 0)
@@ -109,7 +109,7 @@ public class Models  {
 
 
 	static byte[] decompressed = new byte[Constants.MAX_MAP_LEAFS / 8];
-	static byte[] model_visibility = new byte[Constants.MAX_MAP_VISIBILITY]; 
+	static byte[] model_visibility = new byte[Constants.MAX_MAP_VISIBILITY];
 
 	/*
 	===================
@@ -123,7 +123,7 @@ public class Models  {
 		int outp, inp;
 		int row;
 
-		row = (model.vis.numclusters+7)>>3;	
+		row = (model.vis.numclusters+7)>>3;
 		out = decompressed;
 		outp = 0;
 		inp = offset;
@@ -135,7 +135,7 @@ public class Models  {
 				out[outp++] = (byte)0xFF;
 				row--;
 			}
-			return decompressed;		
+			return decompressed;
 		}
 
 		do
@@ -145,7 +145,7 @@ public class Models  {
 				out[outp++] = in[inp++];
 				continue;
 			}
-	
+
 			c = in[inp + 1] & 0xFF;
 			inp += 2;
 			while (c != 0)
@@ -154,7 +154,7 @@ public class Models  {
 				c--;
 			}
 		} while (outp < row);
-	
+
 		return decompressed;
 	}
 
@@ -242,10 +242,10 @@ public class Models  {
 	static void Mod_ForName(final String name, AsyncCallback<Model> callback)
 	{
     int i;
-	
+
 		if (name == null || name.length() == 0)
 			Com.Error(Constants.ERR_DROP, "Mod_ForName: NULL name");
-		
+
 		//
 		// inline models are grabbed only from worldmodel
 		//
@@ -305,12 +305,12 @@ public class Models  {
         bb.order(ByteOrder.LITTLE_ENDIAN);
 
         // call the apropriate loader
-      
+
         bb.mark();
         int ident = bb.getInt();
-        
+
         bb.reset();
-        
+
         switch (ident)
         {
         case QuakeFiles.IDALIASHEADER:
@@ -333,8 +333,8 @@ public class Models  {
         }
         modelReq.callbacks.clear();
       }
-      
-     
+
+
     });
 	}
 
@@ -383,15 +383,15 @@ public class Models  {
 			loadmodel.vis = null;
 			return;
 		}
-		
+
 //		System.arraycopy(mod_base, l.fileofs, model_visibility, 0, l.filelen);
     mod_base.position(l.fileofs);
 		mod_base.get(model_visibility, 0, l.filelen);
-		
+
 		ByteBuffer bb = ByteBuffer.wrap(model_visibility, 0, l.filelen);
-		
+
 		loadmodel.vis = new QuakeFiles.dvis_t(bb.order(ByteOrder.LITTLE_ENDIAN));
-		
+
 		/* done:
 		memcpy (loadmodel.vis, mod_base + l.fileofs, l.filelen);
 
@@ -401,7 +401,7 @@ public class Models  {
 			loadmodel.vis.bitofs[i][0] = LittleLong (loadmodel.vis.bitofs[i][0]);
 			loadmodel.vis.bitofs[i][1] = LittleLong (loadmodel.vis.bitofs[i][1]);
 		}
-		*/ 
+		*/
 	}
 
 
@@ -419,7 +419,7 @@ public class Models  {
 			Com.Error(Constants.ERR_DROP, "MOD_LoadBmodel: funny lump size in " + loadmodel.name);
 
 		count = l.filelen / Vertex.DISK_SIZE;
-		
+
 		vertexes = new Vertex[count];
 
 		loadmodel.vertexes = vertexes;
@@ -458,13 +458,13 @@ public class Models  {
 	=================
 	*/
 	static void Mod_LoadSubmodels(Lump l) {
-	    
+
 	    if ((l.filelen % QuakeFiles.dmodel_t.SIZE) != 0)
 	        Com.Error(Constants.ERR_DROP, "MOD_LoadBmodel: funny lump size in "
 	                + loadmodel.name);
-	    
+
 	    int i, j;
-	    
+
 	    int count = l.filelen / QuakeFiles.dmodel_t.SIZE;
 	    // out = Hunk_Alloc ( count*sizeof(*out));
 	    SubModel out;
@@ -472,15 +472,15 @@ public class Models  {
 	    for (i = 0; i < count; i++) {
 	        outs[i] = new SubModel();
 	    }
-	    
+
 	    loadmodel.submodels = outs;
 	    loadmodel.numsubmodels = count;
-	    
+
 	    ByteBuffer bb = mod_base;mod_base.position(l.fileofs);//ByteBuffer.wrap(mod_base, l.fileofs, l.filelen);
 	    bb.order(ByteOrder.LITTLE_ENDIAN);
-	    
+
 	    QuakeFiles.dmodel_t in;
-	    
+
 	    for (i = 0; i < count; i++) {
 	        in = new QuakeFiles.dmodel_t(bb);
 	        out = outs[i];
@@ -511,12 +511,12 @@ public class Models  {
 			Com.Error(Constants.ERR_DROP, "MOD_LoadBmodel: funny lump size in " + loadmodel.name);
 
 		count = l.filelen / Edge.DISK_SIZE;
-		// out = Hunk_Alloc ( (count + 1) * sizeof(*out));	
+		// out = Hunk_Alloc ( (count + 1) * sizeof(*out));
 		edges = new Edge[count + 1];
 
 		loadmodel.edges = edges;
 		loadmodel.numedges = count;
-		
+
 		ByteBuffer bb = mod_base;mod_base.position(l.fileofs);//ByteBuffer.wrap(mod_base, l.fileofs, l.filelen);
 		bb.order(ByteOrder.LITTLE_ENDIAN);
 
@@ -552,13 +552,15 @@ public class Models  {
 
 		loadmodel.texinfo = out;
 		loadmodel.numtexinfo = count;
-		
-		ByteBuffer bb = mod_base;mod_base.position(l.fileofs);//ByteBuffer.wrap(mod_base, l.fileofs, l.filelen);
+
+		ByteBuffer bb = mod_base;
+    mod_base.position(l.fileofs);
+    //ByteBuffer.wrap(mod_base, l.fileofs, l.filelen);
 		bb.order(ByteOrder.LITTLE_ENDIAN);
 
 		for ( i=0 ; i<count ; i++) {
-			
-			in = new TextureInfo(bb);			
+
+			in = new TextureInfo(bb);
 			out[i].vecs = in.vecs;
 			out[i].flags = in.flags;
 			next = in.nexttexinfo;
@@ -590,35 +592,35 @@ public class Models  {
 	=================
 	*/
 	static void Mod_LoadFaces(Lump l) {
-	    
+
 	    int i, surfnum;
 	    int planenum, side;
 	    int ti;
-	    
+
 	    if ((l.filelen % QuakeFiles.dface_t.SIZE) != 0)
 	        Com.Error(Constants.ERR_DROP, "MOD_LoadBmodel: funny lump size in "
 	                + loadmodel.name);
-	    
+
 	    int count = l.filelen / QuakeFiles.dface_t.SIZE;
 	    // out = Hunk_Alloc ( count*sizeof(*out));
 	    Surface[] outs = new Surface[count];
 	    for (i = 0; i < count; i++) {
 	        outs[i] = new Surface();
 	    }
-	    
+
 	    loadmodel.surfaces = outs;
 	    loadmodel.numsurfaces = count;
-	    
+
 	    ByteBuffer bb = mod_base;mod_base.position(l.fileofs);//ByteBuffer.wrap(mod_base, l.fileofs, l.filelen);
 	    bb.order(ByteOrder.LITTLE_ENDIAN);
-	    
+
 	    GlState.currentmodel = loadmodel;
-	    
+
 	    loadmodel.GL_BeginBuildingLightmaps();
-	    
+
 	    QuakeFiles.dface_t in;
 	    Surface out;
-	    
+
 	    for (surfnum = 0; surfnum < count; surfnum++) {
 	        in = new QuakeFiles.dface_t(bb);
 	        out = outs[surfnum];
@@ -626,28 +628,28 @@ public class Models  {
 	        out.numedges = in.numedges;
 	        out.flags = 0;
 	        out.polys = null;
-	        
+
 	        planenum = in.planenum;
 	        side = in.side;
 	        if (side != 0)
 	            out.flags |= Constants.SURF_PLANEBACK;
-	        
+
 	        out.plane = loadmodel.planes[planenum];
-	        
+
 	        ti = in.texinfo;
 	        if (ti < 0 || ti >= loadmodel.numtexinfo)
 	            Com.Error(Constants.ERR_DROP,
 	            "MOD_LoadBmodel: bad texinfo number");
-	        
+
 	        out.texinfo = loadmodel.texinfo[ti];
-	        
+
 	        out.CalcSurfaceExtents();
-	        
+
 	        // lighting info
-	        
+
 	        for (i = 0; i < Constants.MAXLIGHTMAPS; i++)
 	            out.styles[i] = in.styles[i];
-	        
+
 	        i = in.lightofs;
 	        if (i == -1)
 	            out.samples = null;
@@ -658,9 +660,9 @@ public class Models  {
 	            pointer.mark();
 	            out.samples = pointer; // subarray
 	        }
-	        
+
 	        // set the drawing flags
-	        
+
 	        if ((out.texinfo.flags & Constants.SURF_WARP) != 0) {
 	            out.flags |= Constants.SURF_DRAWTURB;
 	            for (i = 0; i < 2; i++) {
@@ -669,15 +671,15 @@ public class Models  {
 	            }
 	           out.GL_SubdivideSurface(); // cut up polygon for warps
 	        }
-	        
+
 	        // create lightmaps and polygons
 	        if ((out.texinfo.flags & (Constants.SURF_SKY | Constants.SURF_TRANS33
 	                | Constants.SURF_TRANS66 | Constants.SURF_WARP)) == 0)
 	            Surface.GL_CreateSurfaceLightmap(out);
-	        
+
 	        if ((out.texinfo.flags & Constants.SURF_WARP) == 0)
 	            Surface.GL_BuildPolygonFromSurface(out);
-	        
+
 	    }
 	    Surfaces.GL_EndBuildingLightmaps();
 	}
@@ -696,19 +698,19 @@ public class Models  {
 
 		if ((l.filelen % QuakeFiles.dnode_t.SIZE) != 0)
 			Com.Error(Constants.ERR_DROP, "MOD_LoadBmodel: funny lump size in " + loadmodel.name);
-		
+
 		count = l.filelen / QuakeFiles.dnode_t.SIZE;
-		// out = Hunk_Alloc ( count*sizeof(*out));	
+		// out = Hunk_Alloc ( count*sizeof(*out));
 		out = new Node[count];
 
 		loadmodel.nodes = out;
 		loadmodel.numnodes = count;
-		
+
 		ByteBuffer bb = mod_base;mod_base.position(l.fileofs);//ByteBuffer.wrap(mod_base, l.fileofs, l.filelen);
 		bb.order(ByteOrder.LITTLE_ENDIAN);
-		
+
 		// initialize the tree array
-		for ( i=0 ; i<count ; i++) out[i] = new Node(); // do first before linking 
+		for ( i=0 ; i<count ; i++) out[i] = new Node(); // do first before linking
 
 		// fill and link the nodes
 		for ( i=0 ; i<count ; i++)
@@ -719,7 +721,7 @@ public class Models  {
 				out[i].mins[j] = in.mins[j];
 				out[i].maxs[j] = in.maxs[j];
 			}
-	
+
 			p = in.planenum;
 			out[i].plane = loadmodel.planes[p];
 
@@ -736,7 +738,7 @@ public class Models  {
 					out[i].children[j] = loadmodel.leafs[-1 - p]; // mleaf_t extends mnode_t
 			}
 		}
-	
+
 		Node.Mod_SetParent(loadmodel.nodes[0], null);	// sets nodes and leafs
 	}
 
@@ -756,11 +758,11 @@ public class Models  {
 
 		count = l.filelen / QuakeFiles.dleaf_t.SIZE;
 		// out = Hunk_Alloc ( count*sizeof(*out));
-		out = new Leaf[count];	
+		out = new Leaf[count];
 
 		loadmodel.leafs = out;
 		loadmodel.numleafs = count;
-		
+
 		ByteBuffer bb = mod_base;mod_base.position(l.fileofs);//ByteBuffer.wrap(mod_base, l.fileofs, l.filelen);
 		bb.order(ByteOrder.LITTLE_ENDIAN);
 
@@ -781,7 +783,7 @@ public class Models  {
 
 			out[i].setMarkSurface(in.firstleafface, loadmodel.marksurfaces);
 			out[i].nummarksurfaces = in.numleaffaces;
-		}	
+		}
 	}
 
 
@@ -791,15 +793,15 @@ public class Models  {
 	=================
 	*/
 	static void Mod_LoadMarksurfaces(Lump l)
-	{	
+	{
 		int i, j, count;
 
-		Surface[] out; 
+		Surface[] out;
 
 		if ((l.filelen % Constants.SIZE_OF_SHORT) != 0)
 			Com.Error(Constants.ERR_DROP, "MOD_LoadBmodel: funny lump size in " + loadmodel.name);
 		count = l.filelen / Constants.SIZE_OF_SHORT;
-		// out = Hunk_Alloc ( count*sizeof(*out));	
+		// out = Hunk_Alloc ( count*sizeof(*out));
 		out = new Surface[count];
 
 		loadmodel.marksurfaces = out;
@@ -825,10 +827,10 @@ public class Models  {
 	=================
 	*/
 	static void Mod_LoadSurfedges(Lump l)
-	{	
+	{
 		int i, count;
 		int[] offsets;
-	
+
 		if ( (l.filelen % Constants.SIZE_OF_INT) != 0)
 			Com.Error (Constants.ERR_DROP, "MOD_LoadBmodel: funny lump size in " + loadmodel.name);
 
@@ -870,10 +872,10 @@ public class Models  {
 		for (i = 0; i < count; i++) {
 		    out[i] = new Plane();
 		}
-	
+
 		loadmodel.planes = out;
 		loadmodel.numplanes = count;
-		
+
 		ByteBuffer bb = mod_base;mod_base.position(l.fileofs);//ByteBuffer.wrap(mod_base, l.fileofs, l.filelen);
 		bb.order(ByteOrder.LITTLE_ENDIAN);
 
@@ -904,7 +906,7 @@ public class Models  {
 		int i;
 		QuakeFiles.dheader_t	header;
 		SubModel bm;
-	
+
 		loadmodel.type = GlConstants.mod_brush;
 		world_model = loadmodel;
 
@@ -931,7 +933,7 @@ public class Models  {
 		Mod_LoadNodes(header.lumps[Constants.LUMP_NODES]); // ok
 		Mod_LoadSubmodels(header.lumps[Constants.LUMP_MODELS]);
 		mod.numframes = 2;		// regular and alternate animation
-	
+
 		//
 		// set up the submodels
 		//
@@ -952,13 +954,13 @@ public class Models  {
 			Math3D.VectorCopy(bm.maxs, starmod.maxs);
 			Math3D.VectorCopy(bm.mins, starmod.mins);
 			starmod.radius = bm.radius;
-	
+
 			if (i == 0)
 				loadmodel = starmod.copy();
 
 			starmod.numleafs = bm.visleafs;
 		}
-		
+
         Surfaces.staticBufferId = GlState.gl.generateStaticBufferId();
 	}
 
@@ -1010,12 +1012,12 @@ public class Models  {
 		//
 		// load base s and t vertices (not used in gl version)
 		//
-		poutst = new QuakeFiles.dstvert_t[pheader.num_st]; 
+		poutst = new QuakeFiles.dstvert_t[pheader.num_st];
 		buffer.position(pheader.ofs_st);
 		for (int i=0 ; i<pheader.num_st ; i++)
 		{
 			poutst[i] = new QuakeFiles.dstvert_t(buffer);
-		} 
+		}
 
 		//
 		//	   load triangle lists
@@ -1038,7 +1040,7 @@ public class Models  {
 			// verts are all 8 bit, so no swapping needed
 			poutframe[i].verts = new int[pheader.num_xyz];
 			for (int k=0; k < pheader.num_xyz; k++) {
-				poutframe[i].verts[k] = buffer.getInt();	
+				poutframe[i].verts[k] = buffer.getInt();
 			}
 		}
 
@@ -1063,26 +1065,26 @@ public class Models  {
 			int n = skinNames[i].indexOf('\0');
 			if (n > -1) {
 				skinNames[i] = skinNames[i].substring(0, n);
-			}	
+			}
 			mod.skins[i] = Images.findTexture(skinNames[i], QuakeImage.it_skin);
 		}
-		
+
 		// set the model arrays
 		pheader.skinNames = skinNames; // skin names
 		pheader.stVerts = poutst; // textur koordinaten
 		pheader.triAngles = pouttri; // dreiecke
 		pheader.glCmds = poutcmd; // STRIP or FAN
 		pheader.aliasFrames = poutframe; // frames mit vertex array
-		
+
 		mod.extradata = pheader;
-			
+
 		mod.mins[0] = -32;
 		mod.mins[1] = -32;
 		mod.mins[2] = -32;
 		mod.maxs[0] = 32;
 		mod.maxs[1] = 32;
 		mod.maxs[2] = 32;
-		
+
 		precompileGLCmds(pheader);
 	}
 
@@ -1102,7 +1104,7 @@ public class Models  {
 	static void Mod_LoadSpriteModel(Model mod, ByteBuffer buffer)
 	{
 		QuakeFiles.dsprite_t sprout = new QuakeFiles.dsprite_t(buffer);
-		
+
 		if (sprout.version != QuakeFiles.SPRITE_VERSION)
 			Com.Error(Constants.ERR_DROP, "%s has wrong version number (%i should be %i)",
 				new Vargs(3).add(mod.name).add(sprout.version).add(QuakeFiles.SPRITE_VERSION));
@@ -1146,7 +1148,7 @@ public class Models  {
 		flushmap = ConsoleVariables.Get("flushmap", "0", 0);
 		if ((world_model != null) && !world_model.name.equals(fullname) || flushmap.value != 0.0f) {
 			world_model.Mod_Free();
-			
+
 			Com.Println("setting world_model to null");
 			world_model = null;
 		}
@@ -1285,21 +1287,21 @@ public class Models  {
 	 * new functions for vertex array handling
 	 */
 	static final int MODEL_BUFFER_SIZE = 50000;
-	static FloatBuffer globalModelTextureCoordBuf; 
-	static ShortBuffer globalModelVertexIndexBuf; 
-	
+	static FloatBuffer globalModelTextureCoordBuf;
+	static ShortBuffer globalModelVertexIndexBuf;
+
 	static  void init() {
 		globalModelTextureCoordBuf = Lib.newFloatBuffer(MODEL_BUFFER_SIZE * 2);
 		globalModelVertexIndexBuf = Lib.newShortBuffer(MODEL_BUFFER_SIZE);
 	}
-	
-	
-	
+
+
+
 	static void precompileGLCmds(QuakeFiles.dmdl_t model) {
 		model.textureCoordBuf = globalModelTextureCoordBuf.slice();
 		model.vertexIndexBuf = globalModelVertexIndexBuf.slice();
 		Vector<Integer> tmp = new Vector<Integer>();
-			
+
 		int count = 0;
 		int[] order = model.glCmds;
 		int orderIndex = 0;
@@ -1311,7 +1313,7 @@ public class Models  {
 				break;		// done
 
 			tmp.addElement(new Integer(count));
-				
+
 			if (count < 0)
 			{
 				count = -count;
@@ -1331,33 +1333,33 @@ public class Models  {
 				orderIndex += 3;
 			} while (--count != 0);
 		}
-			
+
 		int size = tmp.size();
-			
+
 		model.counts = new int[size];
 		model.indexElements = new ShortBuffer[size];
-			
+
 		count = 0;
 		int pos = 0;
 		for (int i = 0; i < model.counts.length; i++) {
 			count = ((Integer)tmp.get(i)).intValue();
 			model.counts[i] = count;
-				
+
 			count = (count < 0) ? -count : count;
 			model.vertexIndexBuf.position(pos);
 			model.indexElements[i] = model.vertexIndexBuf.slice();
 			model.indexElements[i].limit(count);
 			pos += count;
 		}
-		
+
 		model.staticTextureBufId = GlState.gl.generateStaticBufferId();
 	}
-		
+
 	static void resetModelArrays() {
 		globalModelTextureCoordBuf.rewind();
 		globalModelVertexIndexBuf.rewind();
 	}
-		
+
 	static void modelMemoryUsage() {
 		System.out.println("AliasModels: globalVertexBuffer size " + globalModelVertexIndexBuf.position());
 	}

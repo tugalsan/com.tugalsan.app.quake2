@@ -50,19 +50,19 @@ import com.googlecode.gwtquake.shared.sys.KBD;
 import static com.google.gwt.webgl.client.WebGLRenderingContext.*;
 
 public class GwtWebGLRenderer extends GlRenderer implements Renderer {
-	
+
   KBD kbd = new GwtKBD();
-  
-  
+
+
   public KBD getKeyboardHandler() {
       return kbd;
   }
-  
-  
+
+
 	static class VideoElement extends Element {
 		protected VideoElement() {
 		}
-		
+
 		native final JavaScriptObject getError() /*-{
 		  return this.error;
 	    }-*/;
@@ -86,39 +86,39 @@ public class GwtWebGLRenderer extends GlRenderer implements Renderer {
 		public final native void setCurrentTime(double s) /*-{
 			return this.currentTime = s;
 		}-*/;
-		
+
 		public final boolean ended() {
-//			System.out.println("video.error: " + getError() + 
-//					" duration: " + getDuration() + 
+//			System.out.println("video.error: " + getError() +
+//					" duration: " + getDuration() +
 //					" currentTime: " + getCurrentTime());
-//			
-			return getError() != null || !(Double.isNaN(getDuration()) || 
+//
+			return getError() != null || !(Double.isNaN(getDuration()) ||
 					getCurrentTime() < getDuration());
 		}
 	}
-	
+
 	static final int IMAGE_CHECK_TIME = 250;
 	static final int MAX_IMAGE_REQUEST_COUNT = 12;
 	static int HOLODECK_TEXTURE_SIZE = 128;
 	static int MASK = 15;
 	static int HIT = MASK/2;
-	ByteBuffer holoDeckTexture = ByteBuffer.allocateDirect(HOLODECK_TEXTURE_SIZE * 
+	ByteBuffer holoDeckTexture = ByteBuffer.allocateDirect(HOLODECK_TEXTURE_SIZE *
 			HOLODECK_TEXTURE_SIZE * 4);
 
-	WebGLGl1Contect webGL;
+	WebGLGl1Context webGL;
 	CanvasElement canvas1;
 	CanvasElement canvas2;
 	ArrayList<Image> imageQueue = new ArrayList<Image>();
 	int waitingForImages;
 	VideoElement video;
 	CanvasElement canvas;
-	
+
 	public GwtWebGLRenderer(CanvasElement canvas, Element video) {
 	  super(canvas.getWidth(), canvas.getHeight());
-		GlState.gl = this.webGL = new WebGLGl1Contect(canvas);
+		GlState.gl = this.webGL = new WebGLGl1Context(canvas);
 		this.canvas = canvas;
 		this.video = (VideoElement) video;
-		
+
 		for (int y = 0; y < HOLODECK_TEXTURE_SIZE; y++) {
 			for (int x = 0; x < HOLODECK_TEXTURE_SIZE; x++) {
 				holoDeckTexture.put((byte) 0);
@@ -128,26 +128,26 @@ public class GwtWebGLRenderer extends GlRenderer implements Renderer {
 			}
 		}
 		holoDeckTexture.rewind();
-		
+
 		canvas1 = (CanvasElement) Document.get().createElement("canvas");
 		canvas1.getStyle().setDisplay(Display.NONE);
 		canvas1.setWidth(128);
 		canvas1.setHeight(128);
 		Document.get().getBody().appendChild(canvas1);
-		
+
 		canvas2 = (CanvasElement) Document.get().createElement("canvas");
 		canvas2.setWidth(128);
 		canvas2.setHeight(128);
 		canvas2.getStyle().setDisplay(Display.NONE);
 		Document.get().getBody().appendChild(canvas2);
-		
+
 		init();
 	}
 
 	@Override
 	public void GL_ResampleTexture(int[] in, int inwidth, int inheight,
 			int[] out, int outwidth, int outheight) {
-		
+
 		if (canvas1.getWidth() < inwidth) {
 			canvas1.setWidth(inwidth);
 		}
@@ -158,10 +158,10 @@ public class GwtWebGLRenderer extends GlRenderer implements Renderer {
 		CanvasRenderingContext2D inCtx = canvas1.getContext2D();
 		ImageData data = inCtx.createImageData(inwidth, inheight);
 		CanvasPixelArray pixels = data.getData();
-		
+
 		int len = inwidth * inheight;
 		int p = 0;
-			
+
 		for(int i = 0; i < len; i++) {
 			int abgr = in[i];
 			pixels.set(p, (abgr & 255));
@@ -171,7 +171,7 @@ public class GwtWebGLRenderer extends GlRenderer implements Renderer {
 			p += 4;
 		}
 		inCtx.putImageData(data, 0, 0);
-		
+
 		if (canvas2.getWidth() < outwidth) {
 			canvas2.setWidth(outwidth);
 		}
@@ -181,13 +181,13 @@ public class GwtWebGLRenderer extends GlRenderer implements Renderer {
 
 		CanvasRenderingContext2D outCtx = canvas2.getContext2D();
 		outCtx.drawImage(canvas1, 0, 0, inwidth, inheight, 0, 0, outwidth, outheight);
-		
+
 		data = outCtx.getImageData(0, 0, outwidth, outheight);
 		pixels = data.getData();
-		
+
 		len = outwidth * outheight;
 		p = 0;
-			
+
 		for(int i = 0; i < len; i++) {
 			int r = pixels.get(p) & 255;
 			int g = pixels.get(p + 1) & 255;
@@ -197,11 +197,11 @@ public class GwtWebGLRenderer extends GlRenderer implements Renderer {
 			out[i] = (a << 24) | (b << 16) | (g << 8) | r;
 		}
 	}
-	
+
 	static native JsArrayInteger getImageSize(String name) /*-{
     return $wnd.__imageSizes[name];
   }-*/;
-	
+
 	public Image GL_LoadNewImage(final String name, int type) {
 		final Image image = Images.GL_Find_free_image_t(name, type);
 
@@ -216,10 +216,9 @@ public class GwtWebGLRenderer extends GlRenderer implements Renderer {
 			image.width = d.get(0);
 			image.height = d.get(1);
 		}
-		
+
 		if (type != com.googlecode.gwtquake.shared.common.QuakeImage.it_pic) {
-			GlState.gl.glTexImage2D(TEXTURE_2D, 0, RGBA, HOLODECK_TEXTURE_SIZE, HOLODECK_TEXTURE_SIZE, 0, RGBA, 
-			    UNSIGNED_BYTE, holoDeckTexture);
+			GlState.gl.glTexImage2D(TEXTURE_2D, 0, RGBA, HOLODECK_TEXTURE_SIZE, HOLODECK_TEXTURE_SIZE, 0, RGBA, UNSIGNED_BYTE, holoDeckTexture);
 			GlState.gl.glTexParameterf(TEXTURE_2D, TEXTURE_MIN_FILTER, LINEAR);
 			GlState.gl.glTexParameterf(TEXTURE_2D, TEXTURE_MAG_FILTER, LINEAR);
 		}
@@ -228,10 +227,10 @@ public class GwtWebGLRenderer extends GlRenderer implements Renderer {
 		if(imageQueue.size() == 1) {
 		  new ImageLoader().schedule();
 		}
-		
+
 		return image;
 	}
-	
+
 	class ImageLoader extends Timer {
 
 	  @Override
@@ -249,12 +248,12 @@ public class GwtWebGLRenderer extends GlRenderer implements Renderer {
               img.setSrc(picUrl);
 	      img.getStyle().setDisplay(Display.NONE);
 	      doc.getBody().appendChild(img);
-	      
+
 	      if (img.getPropertyBoolean("complete")) {
 	        loaded(image, img);
 	      } else {
 	    	waitingForImages(+1);
-	        com.google.gwt.user.client.ui.Image imgWidget = 
+	        com.google.gwt.user.client.ui.Image imgWidget =
 	        		com.google.gwt.user.client.ui.Image.wrap(img);
 	        final ImageElement finalImg = img;
 	        imgWidget.addLoadHandler(new LoadHandler() {
@@ -274,14 +273,14 @@ public class GwtWebGLRenderer extends GlRenderer implements Renderer {
 	 //           	finalImg.setSrc(finalImg.getSrc() + "&rt");
 	  //          }
 	          }
-	        });	
+	        });
 	      } // else
 	    } // while
 	    if (imageQueue.size() > 0) {
 		  schedule();
 	    }
 	  }
-	  
+
 	protected void waitingForImages(int i) {
 		waitingForImages += i;
 		if (waitingForImages > 0) {
@@ -293,32 +292,25 @@ public class GwtWebGLRenderer extends GlRenderer implements Renderer {
 		  schedule(IMAGE_CHECK_TIME);
 	  }
 	}
-	
+
 	public void loaded(Image image, ImageElement img) {
-		setPicDataHighLevel(image, img);
-	//	setPicDataLowLevel(image, img);
-	}
-		
-	ByteBuffer bb = ByteBuffer.allocateDirect(128*128*4);
-	
-	public void setPicDataHighLevel(Image image, ImageElement img) {
 		image.has_alpha = true;
 		image.complete = true;
 		image.height = img.getHeight();
 		image.width = img.getWidth();
-		
-		boolean mipMap = image.type != com.googlecode.gwtquake.shared.common.QuakeImage.it_pic && 
+
+		boolean mipMap = image.type != com.googlecode.gwtquake.shared.common.QuakeImage.it_pic &&
 			image.type != com.googlecode.gwtquake.shared.common.QuakeImage.it_sky;
-		
+
 		Images.GL_Bind(image.texnum);
 
-		int p2w = 1 << ((int) Math.ceil(Math.log(image.width) / Math.log(2))); 
-		int p2h = 1 << ((int) Math.ceil(Math.log(image.height) / Math.log(2))); 
+		int p2w = 1 << ((int) Math.ceil(Math.log(image.width) / Math.log(2)));
+		int p2h = 1 << ((int) Math.ceil(Math.log(image.height) / Math.log(2)));
 
 		if (mipMap) {
 			p2w = p2h = Math.max(p2w, p2h);
 		}
-		
+
 		image.upload_width = p2w;
 		image.upload_height = p2h;
 
@@ -336,51 +328,11 @@ public class GwtWebGLRenderer extends GlRenderer implements Renderer {
 			p2h = p2h / 2;
 		}
 		while(mipMap && p2w > 0);
-		
-		GlState.gl.glTexParameterf(TEXTURE_2D, TEXTURE_MIN_FILTER, 
-				mipMap ? LINEAR_MIPMAP_NEAREST : LINEAR);
+
+		GlState.gl.glTexParameterf(TEXTURE_2D, TEXTURE_MIN_FILTER, mipMap ? LINEAR_MIPMAP_NEAREST : LINEAR);
 		GlState.gl.glTexParameterf(TEXTURE_2D, TEXTURE_MAG_FILTER, LINEAR);
 	}
 
-  public void __setPicDataHighLevel(Image image, ImageElement img) {
-    image.has_alpha = true;
-    image.complete = true;
-    image.height = img.getHeight();
-    image.width = img.getWidth();
-    image.upload_height = image.height;
-    image.upload_width = image.width;
-    Images.GL_Bind(image.texnum);
-    webGL.glTexImage2d(TEXTURE_2D, 0, RGBA, RGBA, UNSIGNED_BYTE, img);
-    GlState.gl.glTexParameterf(TEXTURE_2D, TEXTURE_MIN_FILTER, LINEAR);
-    GlState.gl.glTexParameterf(TEXTURE_2D, TEXTURE_MAG_FILTER, LINEAR);
-  }
-
-	public void setPicDataLowLevel(Image image, ImageElement img) {
-		CanvasElement canvas = (CanvasElement) Document.get().createElement("canvas");
-		int w = img.getWidth();
-		int h = img.getHeight();
-		canvas.setWidth(w);
-		canvas.setHeight(h);
-//		canvas.getStyle().setProperty("border", "solid 1px green");
-		canvas.getStyle().setDisplay(Display.NONE);
-		Document.get().getBody().appendChild(canvas);
-		CanvasRenderingContext2D ctx = canvas.getContext2D();
-		ctx.drawImage(img, 0, 0);
-		ImageData data = ctx.getImageData(0, 0, w, h);
-		CanvasPixelArray pixels = data.getData();
-		
-		int count = w * h * 4;
-		byte[] pic = new byte[count];
-		for (int i = 0; i < count; i += 4) {
-			pic[i + 3] = (byte) pixels.get(i + 3); // alpha, then bgr
-			pic[i + 2] = (byte) pixels.get(i + 2);
-			pic[i + 1] = (byte) pixels.get(i + 1);
-			pic[i] = (byte) pixels.get(i);
-		}
-		
-		image.setData(pic, w, h, 32);
-	}
-	
 	 protected void debugLightmap(IntBuffer lightmapBuffer, int w, int h, float scale) {
 		 CanvasElement canvas = (CanvasElement) Document.get().createElement("canvas");
 		 canvas.setWidth(w);
@@ -397,26 +349,23 @@ public class GwtWebGLRenderer extends GlRenderer implements Renderer {
 		 }
 		 canvas.getContext2D().putImageData(id, 0, 0);
 	 }
-	 
+
 	private static String convertPicName(String name, int type) {
 	  int dotIdx = name.indexOf('.');
 	  assert dotIdx != -1;
 	  return "baseq2/" + name.substring(0, dotIdx) + ".png";
 	}
-	
+
 	public boolean updateVideo() {
-		
 		return !video.ended();
 	}
-	
-	
+
 	public void CinematicSetPalette(byte[] palette) {
 		setVideoVisible(palette != null);
 	}
-	
-	
+
 	boolean videoVisible = false;
-	
+
 	private void setVideoVisible(boolean show) {
 		if (videoVisible == show) {
 			return;
@@ -437,7 +386,7 @@ public class GwtWebGLRenderer extends GlRenderer implements Renderer {
 			}
 		}
 	}
-	
+
 	public boolean showVideo(String name) {
 		if (name == null) {
 			setVideoVisible(false);
@@ -458,10 +407,8 @@ public class GwtWebGLRenderer extends GlRenderer implements Renderer {
 		if (!Double.isNaN(video.getDuration())) {
 			video.setCurrentTime(0);
 		}
-		
+
 		setVideoVisible(true);
 		return true;
 	}
-
-	
 }
